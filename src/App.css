@@ -574,67 +574,148 @@ img {
 /* =======================
    Footer
 ======================= */
+/* === Footer Base === */
 .footer {
-  background: #111;
-  color: #fff;
-  padding: 3rem 0 2rem;
-  margin-top: 4rem;
+  background-color: #0b0d17;
+  color: #ffffff;
+  padding: 60px 20px 30px;
+  font-family: 'Inter', sans-serif;
 }
 
 .footer__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  align-items: start;
+  margin-bottom: 40px;
+}
+
+/* === Brand Column === */
+.footer__brand {
+  max-width: 280px;
 }
 
 .footer__brand .logo {
-  font-size: 2rem;
-  margin-right: 0.5rem;
+  font-size: 28px;
+  color: #0400e0;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 20px;
+  vertical-align: middle;
 }
 
 .footer__tagline {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: #bbb;
+  font-size: 14px;
+  margin-top: 10px;
+  color: #dcdcdc;
 }
 
+/* === Address === */
+.footer__address {
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 15px;
+  color: #b5b5b5;
+}
+
+.footer__address a {
+  display: block;
+  color: #1512f2;
+  text-decoration: none;
+  margin-top: 4px;
+  transition: color 0.2s ease;
+}
+
+.footer__address a:hover {
+  color: #ffffff;
+}
+
+/* === Footer Links === */
 .footer__links h4,
+.footer__contact h4,
 .footer__social h4 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #ffffff;
+  text-transform: uppercase;
 }
 
 .footer__links ul,
-.footer__social ul {
+.footer__social ul,
+.footer__contact ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
 .footer__links li,
-.footer__social li {
-  margin-bottom: 0.5rem;
+.footer__social li,
+.footer__contact li {
+  margin-bottom: 8px;
 }
 
 .footer__links a,
 .footer__social a {
-  color: #bbb;
+  color: #b5b5b5;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.2s ease;
 }
 
 .footer__links a:hover,
 .footer__social a:hover {
-  color: #fff;
+  color: #1c26dd;
 }
 
+/* === Contact Column === */
+.footer__contact p {
+  font-size: 14px;
+  color: #dcdcdc;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.footer__contact a {
+  color: #0004e0;
+  text-decoration: none;
+}
+
+.footer__contact a:hover {
+  color: #ffffff;
+}
+
+/* === Bottom Bar === */
 .footer__bottom {
-  border-top: 1px solid #333;
-  margin-top: 2rem;
-  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
-  font-size: 0.85rem;
-  color: #aaa;
+  padding-top: 20px;
+}
+
+.footer__bottom p {
+  font-size: 13px;
+  color: #a1a1a1;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__bottom {
+    font-size: 12px;
+  }
 }
 
 /* =======================

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-   const fullText = "Build with AI that feels effortless...";
+  const fullText = "Build with AI that feels effortless...";
   const [typedText, setTypedText] = useState("");
 
   useEffect(() => {
@@ -103,12 +103,16 @@ function App() {
 
       <main id="main">
         {/* Hero Section */}
-        <section className="hero">
+        <section id="hero" className="hero">
           <div className="container hero__grid">
             <div className="hero__copy">
               <h1>{typedText}<span className="highlight"></span></h1>
               <p className="lead">
                 NovaAI helps you summarize, generate, and automate—without the complexity.
+                Built for modern teams, it empowers you to create content, automate workflows,
+                and integrate powerful AI directly into your applications. With real-time insights,
+                privacy-first design, and seamless performance, NovaAI lets you work smarter,
+                scale faster, and bring your ideas to life — all from one intuitive platform.
               </p>
               <div className="hero__actions">
                 <a className="btn" href="#cta">Try Free</a>
@@ -285,9 +289,16 @@ function App() {
             <span className="logo">◎</span>
             <span className="brand-name">NovaAI</span>
             <p className="footer__tagline">Simple, powerful AI for your workflow.</p>
+            <address className="footer__address">
+              <strong>NovaAI HQ</strong><br />
+              123 Innovation Drive,<br />
+              San Francisco, CA 94107, USA<br />
+              <a href="mailto:support@novaai.com">support@novaai.com</a><br />
+              <a href="tel:+14155550123">+1 (415) 555-0123</a>
+            </address>
           </div>
 
-          {/* Column 2: Links */}
+          {/* Column 2: Company */}
           <div className="footer__links">
             <h4>Company</h4>
             <ul>
@@ -309,7 +320,18 @@ function App() {
             </ul>
           </div>
 
-          {/* Column 4: Social */}
+          {/* Column 4: Contact */}
+          <div className="footer__contact">
+            <h4>Contact Us</h4>
+            <p>Have questions or need assistance? Reach out to our support team anytime.</p>
+            <ul>
+              <li>Email: <a href="mailto:hello@novaai.com">hello@novaai.com</a></li>
+              <li>Phone: <a href="tel:+14155550234">+1 (415) 555-0234</a></li>
+              <li>Mon–Fri: 9:00 AM – 6:00 PM PST</li>
+            </ul>
+          </div>
+
+          {/* Column 5: Social */}
           <div className="footer__social">
             <h4>Follow Us</h4>
             <ul>
@@ -324,7 +346,6 @@ function App() {
           <p>© <span id="year">{new Date().getFullYear()}</span> NovaAI. All rights reserved.</p>
         </div>
       </footer>
-
 
       <button
         id="backToTop"
