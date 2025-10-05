@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const fullText = "Build with AI that feels effortless...";
+  const fullText = "Build with AI that feels effortless..";
   const [typedText, setTypedText] = useState("");
 
   useEffect(() => {
