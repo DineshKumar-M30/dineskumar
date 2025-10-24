@@ -1,169 +1,110 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { TrashIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
 
-export default function AuthPage() {
-  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
-  const [loginErrors, setLoginErrors] = useState({});
-
-  const [signupForm, setSignupForm] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    password: "",
+export default function TaskManager() {
+  const [tasks, setTasks] = useState(() => {
+    try {
+      const saved = localStorage.getItem("tasks");
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      console.error("Error loading tasks:", error);
+      return [];
+    }
   });
-  const [signupErrors, setSignupErrors] = useState({});
 
-  const [showSignup, setShowSignup] = useState(false);
-  const [popup, setPopup] = useState({ open: false, message: "" });
+  const [task, setTask] = useState("");
 
-  // ===== Login handlers =====
-  const handleLoginChange = (e) => {
-    setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
-    setLoginErrors({ ...loginErrors, [e.target.name]: "" });
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  const addTask = () => {
+    if (!task.trim()) return;
+    setTasks((prev) => [...prev, task]);
+    setTask("");
   };
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    const errors = {};
-    if (!loginForm.email) errors.email = "Email is required";
-    if (!loginForm.password) errors.password = "Password is required";
-
-    setLoginErrors(errors);
-
-    if (Object.keys(errors).length === 0) {
-      setPopup({ open: true, message: "Login successful! Welcome back." });
-    }
+  const deleteTask = (index) => {
+    setTasks((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // ===== Signup handlers =====
-  const handleSignupChange = (e) => {
-    setSignupForm({ ...signupForm, [e.target.name]: e.target.value });
-    setSignupErrors({ ...signupErrors, [e.target.name]: "" });
-  };
-
-  const handleSignupSubmit = (e) => {
-    e.preventDefault();
-    const errors = {};
-    Object.keys(signupForm).forEach((key) => {
-      if (!signupForm[key])
-        errors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} is required`;
-    });
-
-    setSignupErrors(errors);
-
-    if (Object.keys(errors).length === 0) {
-      setPopup({ open: true, message: `Signup successful! Welcome, ${signupForm.firstName}.` });
-      setSignupForm({ firstName: "", lastName: "", phone: "", email: "", password: "" });
-      setShowSignup(false);
-    }
-  };
-
-  const closePopup = () => {
-    setPopup({ open: false, message: "" });
-  };
+  const clearAll = () => setTasks([]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600">
-      <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-md mx-4">
-        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
-          {showSignup ? "Signup" : "Login"}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100 p-6">
+      <div className="bg-white rounded-3xl shadow-2xl px-6 py-8 w-full max-w-md">
+        
+        <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6 relative">
+          Task Manager
+          <span className="absolute left-1/2 -bottom-1 w-24 h-1 bg-indigo-500 -translate-x-1/2 rounded-full" />
         </h2>
 
-        {showSignup ? (
-          <form onSubmit={handleSignupSubmit} className="space-y-5">
-            {["firstName", "lastName", "phone", "email", "password"].map((field) => (
-              <div key={field}>
-                <label className="block text-gray-700 text-sm font-medium mb-2">
-                  {field.charAt(0).toUpperCase() + field.slice(1)}
-                </label>
-                <input
-                  type={field === "password" ? "password" : "text"}
-                  name={field}
-                  value={signupForm[field]}
-                  onChange={handleSignupChange}
-                  placeholder={`Enter your ${field}`}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none ${signupErrors[field] ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
-                    }`}
-                />
-                {signupErrors[field] && (
-                  <p className="text-red-500 text-sm mt-1">{signupErrors[field]}</p>
-                )}
-              </div>
-            ))}
+        {/* Input Section */}
+        <div className="flex gap-2 mb-5">
+          <input
+            type="text"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+            placeholder="Enter a task..."
+            className="flex-1 px-3 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-400 outline-none"
+          />
+          <button
+            onClick={addTask}
+            className="bg-indigo-600 text-white px-5 py-2 rounded-xl hover:bg-indigo-700 active:scale-95 transition-all cursor-pointer"
+          >
+            Add
+          </button>
+        </div>
 
-            <button
-              type="submit"
-              className="w-full bg-green-600 text-white font-semibold py-2 rounded-lg hover:bg-green-700 hover:scale-105 active:scale-95 transition-all duration-150 cursor-pointer"
-            >
-              Signup
-            </button>
-
-            <p className="text-center text-sm mt-2">
-              Already have an account?{" "}
-              <button type="button" onClick={() => setShowSignup(false)} className="text-blue-500 underline cursor-pointer">
-                Login
-              </button>
-            </p>
-          </form>
-        ) : (
-          <form onSubmit={handleLoginSubmit} className="space-y-5">
-            {["email", "password"].map((field) => (
-              <div key={field}>
-                <label className="block text-gray-700 text-sm font-medium mb-2">
-                  {field === "email" ? "Email / Username" : "Password"}
-                </label>
-                <input
-                  type={field === "password" ? "password" : "text"}
-                  name={field}
-                  value={loginForm[field]}
-                  onChange={handleLoginChange}
-                  placeholder={`Enter your ${field}`}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none ${loginErrors[field] ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
-                    }`}
-                />
-                {loginErrors[field] && <p className="text-red-500 text-sm mt-1">{loginErrors[field]}</p>}
-              </div>
-            ))}
-            <div className="text-right mt-2">
-              <a
-                href="#"
-                className="text-sm text-blue-500 hover:text-blue-600 transition-colors underline-offset-2"
+        {/* Task List */}
+        {tasks.length > 0 ? (
+          <ul className="space-y-3">
+            {tasks.map((t, index) => (
+              <li
+                key={index}
+                className="group bg-gray-50 border flex justify-between items-center px-3 py-2 rounded-xl shadow-sm hover:bg-white hover:shadow-md transition-all animate-slideIn"
               >
-                Forgot Password?
-              </a>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all duration-150 cursor-pointer"
-            >
-              Login
-            </button>
+                <div className="flex items-center gap-2">
+                  <CheckCircleIcon className="h-5 w-5 text-green-500 opacity-80" />
+                  <span className="font-medium text-gray-700">{t}</span>
+                </div>
 
-            <p className="text-center text-sm mt-2">
-              Don't have an account?{" "}
-              <button type="button" onClick={() => setShowSignup(true)} className="text-sm text-blue-500 cursor-pointer underline">
-                Signup
-              </button>
-            </p>
-          </form>
+                <TrashIcon
+                  onClick={() => deleteTask(index)}
+                  className="h-5 w-5 text-red-500 cursor-pointer opacity-60 group-hover:opacity-100 hover:scale-110 transition"
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="text-center text-gray-500 mt-6 italic">
+            📌 No tasks yet. Add one above!
+          </div>
+        )}
+
+        {/* Clear All */}
+        {tasks.length > 0 && (
+          <button
+            onClick={clearAll}
+            className="mt-6 w-full bg-red-500 text-white py-2.5 rounded-xl hover:bg-red-600 active:scale-95 transition cursor-pointer"
+          >
+            Clear All
+          </button>
         )}
       </div>
 
-      {/* Success Popup */}
-      {popup.open && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-          <div className="bg-white rounded-xl shadow-2xl p-6 w-80 text-center">
-            <h3 className="text-lg font-semibold mb-3 text-green-600">Success</h3>
-            <p className="text-gray-700 mb-4">{popup.message}</p>
-            <button
-              onClick={closePopup}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Animations */}
+      <style>
+        {`
+        @keyframes slideIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+          animation: slideIn 0.25s ease-out;
+        }
+        `}
+      </style>
     </div>
   );
 }
