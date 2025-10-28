@@ -1,110 +1,94 @@
-import { useState, useEffect } from "react";
-import { TrashIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
-export default function TaskManager() {
-  const [tasks, setTasks] = useState(() => {
-    try {
-      const saved = localStorage.getItem("tasks");
-      return saved ? JSON.parse(saved) : [];
-    } catch (error) {
-      console.error("Error loading tasks:", error);
-      return [];
-    }
-  });
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState("home");
 
-  const [task, setTask] = useState("");
-
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
-
-  const addTask = () => {
-    if (!task.trim()) return;
-    setTasks((prev) => [...prev, task]);
-    setTask("");
+  const handleActive = (name) => {
+    setActive(name);
+    setIsOpen(false);
   };
-
-  const deleteTask = (index) => {
-    setTasks((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const clearAll = () => setTasks([]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100 p-6">
-      <div className="bg-white rounded-3xl shadow-2xl px-6 py-8 w-full max-w-md">
-        
-        <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6 relative">
-          Task Manager
-          <span className="absolute left-1/2 -bottom-1 w-24 h-1 bg-indigo-500 -translate-x-1/2 rounded-full" />
-        </h2>
+    <nav className="bg-blue-600 fixed top-0 left-0 w-full shadow-lg z-50 text-white">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        {/* Logo / Brand */}
+        <h1 className="text-xl font-bold cursor-pointer">NovaAI</h1>
 
-        {/* Input Section */}
-        <div className="flex gap-2 mb-5">
-          <input
-            type="text"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            placeholder="Enter a task..."
-            className="flex-1 px-3 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-400 outline-none"
-          />
-          <button
-            onClick={addTask}
-            className="bg-indigo-600 text-white px-5 py-2 rounded-xl hover:bg-indigo-700 active:scale-95 transition-all cursor-pointer"
-          >
-            Add
+        {/* Desktop Menu */}
+        <div className="hidden sm:flex gap-8 items-center">
+          {[
+            { name: "home", label: "Home" },
+            { name: "about", label: "About" },
+            { name: "services", label: "Services" },
+            { name: "contact", label: "Contact" },
+          ].map((item) => (
+            <button
+              key={item.name}
+              onClick={() => handleActive(item.name)}
+              className={`hover:text-gray-200 transition ${
+                active === item.name ? "underline font-semibold" : ""
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+
+          <button className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition">
+            Get Started
           </button>
         </div>
 
-        {/* Task List */}
-        {tasks.length > 0 ? (
-          <ul className="space-y-3">
-            {tasks.map((t, index) => (
-              <li
-                key={index}
-                className="group bg-gray-50 border flex justify-between items-center px-3 py-2 rounded-xl shadow-sm hover:bg-white hover:shadow-md transition-all animate-slideIn"
-              >
-                <div className="flex items-center gap-2">
-                  <CheckCircleIcon className="h-5 w-5 text-green-500 opacity-80" />
-                  <span className="font-medium text-gray-700">{t}</span>
-                </div>
-
-                <TrashIcon
-                  onClick={() => deleteTask(index)}
-                  className="h-5 w-5 text-red-500 cursor-pointer opacity-60 group-hover:opacity-100 hover:scale-110 transition"
-                />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div className="text-center text-gray-500 mt-6 italic">
-            📌 No tasks yet. Add one above!
-          </div>
-        )}
-
-        {/* Clear All */}
-        {tasks.length > 0 && (
-          <button
-            onClick={clearAll}
-            className="mt-6 w-full bg-red-500 text-white py-2.5 rounded-xl hover:bg-red-600 active:scale-95 transition cursor-pointer"
-          >
-            Clear All
-          </button>
-        )}
+        {/* Hamburger Icon (Mobile) */}
+        <button
+          className="sm:hidden text-white"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
 
-      {/* Animations */}
-      <style>
-        {`
-        @keyframes slideIn {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-slideIn {
-          animation: slideIn 0.25s ease-out;
-        }
-        `}
-      </style>
-    </div>
+      {/* Mobile Sliding Menu */}
+      <div
+        className={`sm:hidden fixed top-0 right-0 h-full w-2/3 bg-blue-700 bg-opacity-95 backdrop-blur-md transform transition-transform duration-300 ease-in-out p-6 flex flex-col gap-6 text-white shadow-xl z-40 ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <button className="self-end mb-4" onClick={() => setIsOpen(false)}>
+          <X size={28} />
+        </button>
+
+        {[
+          { name: "home", label: "Home" },
+          { name: "about", label: "About" },
+          { name: "services", label: "Services" },
+          { name: "contact", label: "Contact" },
+        ].map((item) => (
+          <button
+            key={item.name}
+            onClick={() => handleActive(item.name)}
+            className={`text-lg font-medium border-b pb-2 transition ${
+              active === item.name ? "text-yellow-300" : ""
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
+
+        <button className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition mt-4">
+          Get Started
+        </button>
+      </div>
+
+      {/* Dark Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 sm:hidden"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
+    </nav>
   );
 }
