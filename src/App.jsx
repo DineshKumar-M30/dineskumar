@@ -1,94 +1,81 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import React from "react";
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [active, setActive] = useState("home");
-
-  const handleActive = (name) => {
-    setActive(name);
-    setIsOpen(false);
-  };
-
+const ContactForm = () => {
   return (
-    <nav className="bg-blue-600 fixed top-0 left-0 w-full shadow-lg z-50 text-white">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo / Brand */}
-        <h1 className="text-xl font-bold cursor-pointer">NovaAI</h1>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-500 p-4">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Contact Us</h2>
 
-        {/* Desktop Menu */}
-        <div className="hidden sm:flex gap-8 items-center">
-          {[
-            { name: "home", label: "Home" },
-            { name: "about", label: "About" },
-            { name: "services", label: "Services" },
-            { name: "contact", label: "Contact" },
-          ].map((item) => (
-            <button
-              key={item.name}
-              onClick={() => handleActive(item.name)}
-              className={`hover:text-gray-200 transition ${
-                active === item.name ? "underline font-semibold" : ""
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
+        <form className="space-y-4">
+          <div>
+            <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Your Name"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
 
-          <button className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition">
-            Get Started
-          </button>
-        </div>
+          <div>
+            <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Your Email"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
 
-        {/* Hamburger Icon (Mobile) */}
-        <button
-          className="sm:hidden text-white"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
+          <div>
+            <label htmlFor="subject" className="block text-gray-700 font-semibold mb-2">
+              Subject
+            </label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              placeholder="Subject"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
 
-      {/* Mobile Sliding Menu */}
-      <div
-        className={`sm:hidden fixed top-0 right-0 h-full w-2/3 bg-blue-700 bg-opacity-95 backdrop-blur-md transform transition-transform duration-300 ease-in-out p-6 flex flex-col gap-6 text-white shadow-xl z-40 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <button className="self-end mb-4" onClick={() => setIsOpen(false)}>
-          <X size={28} />
-        </button>
+          <div>
+            <label htmlFor="message" className="block text-gray-700 font-semibold mb-2">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Write your message here..."
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md resize-y min-h-[120px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+            ></textarea>
+          </div>
 
-        {[
-          { name: "home", label: "Home" },
-          { name: "about", label: "About" },
-          { name: "services", label: "Services" },
-          { name: "contact", label: "Contact" },
-        ].map((item) => (
           <button
-            key={item.name}
-            onClick={() => handleActive(item.name)}
-            className={`text-lg font-medium border-b pb-2 transition ${
-              active === item.name ? "text-yellow-300" : ""
-            }`}
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded-md text-lg font-medium transition-colors duration-300 hover:bg-blue-700"
           >
-            {item.label}
+            Send Message
           </button>
-        ))}
-
-        <button className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition mt-4">
-          Get Started
-        </button>
+        </form>
       </div>
 
-      {/* Dark Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 sm:hidden"
-          onClick={() => setIsOpen(false)}
-        ></div>
-      )}
-    </nav>
+      <p className="text-white text-center text-sm mt-6">
+        We respect your privacy — your message is private.
+      </p>
+    </div>
   );
-}
+};
+
+export default ContactForm;
