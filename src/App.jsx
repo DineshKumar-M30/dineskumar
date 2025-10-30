@@ -1,81 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 
-const ContactForm = () => {
+export default function MiniCalculator() {
+  const [num1, setNum1] = useState("");
+  const [num2, setNum2] = useState("");
+  const [result, setResult] = useState(null);
+
+  const handleCalculate = (operator) => {
+    const n1 = parseFloat(num1);
+    const n2 = parseFloat(num2);
+
+    if (isNaN(n1) || isNaN(n2)) {
+      setResult("Please enter valid numbers");
+      return;
+    }
+
+    switch (operator) {
+      case "+":
+        setResult(n1 + n2);
+        break;
+      case "-":
+        setResult(n1 - n2);
+        break;
+      case "×":
+        setResult(n1 * n2);
+        break;
+      case "÷":
+        setResult(n2 !== 0 ? n1 / n2 : "Cannot divide by 0");
+        break;
+      default:
+        setResult("Invalid Operation");
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-500 p-4">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Contact Us</h2>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-80">
+        <h2 className="text-2xl font-bold text-center mb-4">Mini Calculator</h2>
 
-        <form className="space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Your Name"
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
+        <input
+          type="number"
+          placeholder="Enter first number"
+          value={num1}
+          onChange={(e) => setNum1(e.target.value)}
+          className="w-full border rounded-lg p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        <input
+          type="number"
+          placeholder="Enter second number"
+          value={num2}
+          onChange={(e) => setNum2(e.target.value)}
+          className="w-full border rounded-lg p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        <div className="flex justify-between mb-4">
+          {["+", "-", "×", "÷"].map((op) => (
+            <button
+              key={op}
+              onClick={() => handleCalculate(op)}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+            >
+              {op}
+            </button>
+          ))}
+        </div>
+
+        {result !== null && (
+          <div className="text-center text-lg font-semibold">
+            Result: <span className="text-blue-600">{result}</span>
           </div>
-
-          <div>
-            <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Your Email"
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="subject" className="block text-gray-700 font-semibold mb-2">
-              Subject
-            </label>
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              placeholder="Subject"
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="message" className="block text-gray-700 font-semibold mb-2">
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              placeholder="Write your message here..."
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md resize-y min-h-[120px] focus:outline-none focus:ring-2 focus:ring-blue-400"
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md text-lg font-medium transition-colors duration-300 hover:bg-blue-700"
-          >
-            Send Message
-          </button>
-        </form>
+        )}
       </div>
-
-      <p className="text-white text-center text-sm mt-6">
-        We respect your privacy — your message is private.
-      </p>
     </div>
   );
-};
-
-export default ContactForm;
+}
