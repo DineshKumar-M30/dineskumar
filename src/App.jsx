@@ -1,76 +1,119 @@
 import React, { useState } from "react";
 
-export default function MiniCalculator() {
-  const [num1, setNum1] = useState("");
-  const [num2, setNum2] = useState("");
-  const [result, setResult] = useState(null);
+export default function RandomNumberGenerator() {
+  const [min, setMin] = useState(1);
+  const [max, setMax] = useState(100);
+  const [randomNumber, setRandomNumber] = useState(null);
 
-  const handleCalculate = (operator) => {
-    const n1 = parseFloat(num1);
-    const n2 = parseFloat(num2);
-
-    if (isNaN(n1) || isNaN(n2)) {
-      setResult("Please enter valid numbers");
+  const generateRandom = () => {
+    const minVal = parseInt(min);
+    const maxVal = parseInt(max);
+    if (minVal >= maxVal) {
+      alert("⚠️ Max value must be greater than Min value!");
       return;
     }
-
-    switch (operator) {
-      case "+":
-        setResult(n1 + n2);
-        break;
-      case "-":
-        setResult(n1 - n2);
-        break;
-      case "×":
-        setResult(n1 * n2);
-        break;
-      case "÷":
-        setResult(n2 !== 0 ? n1 / n2 : "Cannot divide by 0");
-        break;
-      default:
-        setResult("Invalid Operation");
-    }
+    const random = Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
+    setRandomNumber(random);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded-2xl shadow-lg w-80">
-        <h2 className="text-2xl font-bold text-center mb-4">Mini Calculator</h2>
+    <div style={styles.container}>
+      <h1 style={styles.title}>🎲 Random Number Generator</h1>
 
-        <input
-          type="number"
-          placeholder="Enter first number"
-          value={num1}
-          onChange={(e) => setNum1(e.target.value)}
-          className="w-full border rounded-lg p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-
-        <input
-          type="number"
-          placeholder="Enter second number"
-          value={num2}
-          onChange={(e) => setNum2(e.target.value)}
-          className="w-full border rounded-lg p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-
-        <div className="flex justify-between mb-4">
-          {["+", "-", "×", "÷"].map((op) => (
-            <button
-              key={op}
-              onClick={() => handleCalculate(op)}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
-            >
-              {op}
-            </button>
-          ))}
+      <div style={styles.inputContainer}>
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Min:</label>
+          <input
+            type="number"
+            value={min}
+            onChange={(e) => setMin(e.target.value)}
+            style={styles.input}
+          />
         </div>
 
-        {result !== null && (
-          <div className="text-center text-lg font-semibold">
-            Result: <span className="text-blue-600">{result}</span>
-          </div>
-        )}
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Max:</label>
+          <input
+            type="number"
+            value={max}
+            onChange={(e) => setMax(e.target.value)}
+            style={styles.input}
+          />
+        </div>
       </div>
+
+      <button style={styles.button} onClick={generateRandom}>
+        Generate
+      </button>
+
+      {randomNumber !== null && (
+        <div style={styles.resultBox}>
+          <h2 style={styles.resultText}>{randomNumber}</h2>
+        </div>
+      )}
     </div>
   );
 }
+
+const styles = {
+  container: {
+    fontFamily: "Poppins, sans-serif",
+    background: "linear-gradient(135deg, #007BFF, #00A8FF)", // 💙 Blue gradient background
+    color: "#fff",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100vh",
+    padding: "20px",
+  },
+  title: {
+    fontSize: "2em",
+    marginBottom: "20px",
+  },
+  inputContainer: {
+    display: "flex",
+    gap: "20px",
+    marginBottom: "20px",
+  },
+  inputGroup: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  label: {
+    marginBottom: "5px",
+    fontWeight: "500",
+  },
+  input: {
+    width: "80px",
+    padding: "8px",
+    textAlign: "center",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    fontSize: "1em",
+  },
+  button: {
+    padding: "10px 20px",
+    backgroundColor: "#fff",
+    color: "#007BFF",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "1em",
+    fontWeight: "600",
+    transition: "all 0.3s",
+  },
+  resultBox: {
+    marginTop: "25px",
+    padding: "20px 40px",
+    backgroundColor: "#fff",
+    borderRadius: "10px",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+  },
+  resultText: {
+    fontSize: "2em",
+    color: "#007BFF",
+    margin: 0,
+  },
+};
