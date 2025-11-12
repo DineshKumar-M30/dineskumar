@@ -1,255 +1,152 @@
 import React, { useState } from "react";
+import "./App.css";
 
-export default function ResponsiveNavbar() {
+export default function PortfolioPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState("");
+
+  // Smooth scroll
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    section.scrollIntoView({ behavior: "smooth" });
+    setMenuOpen(false);
+  };
+
+  // Form Validation (Gmail only)
+  const validateForm = (e) => {
+    e.preventDefault();
+    let tempErrors = {};
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+    // Email validation
+    if (!formData.email.trim()) {
+      tempErrors.email = "Email is required";
+    } else if (!gmailRegex.test(formData.email)) {
+      tempErrors.email = "Only Gmail addresses are allowed (e.g., user@gmail.com)";
+    }
+
+    // Password validation
+    if (!formData.password.trim()) {
+      tempErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      tempErrors.password = "Password must be at least 6 characters";
+    }
+
+    setErrors(tempErrors);
+    setSuccess("");
+
+    // If no errors, show success
+    if (Object.keys(tempErrors).length === 0) {
+      setSuccess("✅ Login successful!");
+      setFormData({ email: "", password: "" });
+    }
+  };
 
   return (
     <>
+      {/* Navbar */}
       <nav className="navbar">
-        <div className="logo">NOVA AI</div>
-
+        <div className="logo">MyPortfolio</div>
         <div className={`nav-links ${menuOpen ? "open" : ""}`}>
-          <a href="#home" className="nav-item">Home</a>
-          <a href="#about" className="nav-item">About</a>
-          <a href="#features" className="nav-item">Features</a>
-          <a href="#contact" className="nav-item">Contact</a>
+          <a onClick={() => scrollToSection("about")}>About</a>
+          <a onClick={() => scrollToSection("projects")}>Projects</a>
+          <a onClick={() => scrollToSection("gallery")}>Gallery</a>
+          <a onClick={() => scrollToSection("contact")}>Contact</a>
         </div>
-
-        <div
-          className={`hamburger ${menuOpen ? "active" : ""}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
+        <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+          ☰
         </div>
       </nav>
 
-      {/* AI-related content section */}
-      <section id="home" className="hero-section">
-        <h1>Welcome to NOVA AI</h1>
-        <p>
-          Empowering the future with intelligent solutions. NOVA AI brings 
-          cutting-edge artificial intelligence tools to automate workflows, 
-          enhance decision-making, and transform how you interact with technology.
-        </p>
-        <button className="cta-button">Explore AI Tools</button>
+  {/* About Section */}
+<section id="about" className="section">
+  <h2>About Me</h2>
+  <p>
+    I’m a passionate <b>Software Developer</b> with expertise in ReactJS, JavaScript,
+    and modern front-end technologies. I enjoy crafting clean, responsive,
+    and user-friendly interfaces while continuously learning new tools
+    and frameworks.
+  </p>
+  <img
+    src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=80"
+    alt="Software Developer working on a project"
+    className="about-img"
+  />
+</section>
+
+      {/* Projects Section */}
+      <section id="projects" className="section">
+        <h2>Projects</h2>
+        <ul>
+          <li>🌐 Portfolio Website – Built with ReactJS and responsive design principles</li>
+          <li>🛒 E-commerce App – Product filtering, search, and cart management</li>
+          <li>🔐 Form Validation App – Real-time validation and user authentication flow</li>
+        </ul>
+        <img
+          src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1000&q=80"
+          alt="Teamwork and projects"
+          className="projects-img"
+        />
       </section>
+{/* Image Gallery */}
+<section id="gallery" className="section gallery">
+  <h2>Gallery</h2>
+  <div className="image-grid">
+    {[
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80", // coding on laptop
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80", // developer team
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80", // modern office setup
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80", // developer desk ✅ (new)
+      "https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=600&q=80", // focused developer
+      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80", // creative team
+    ].map((src, i) => (
+      <div key={i} className="img-box">
+        <img src={src} alt={`Gallery ${i + 1}`} />
+      </div>
+    ))}
+  </div>
+</section>
 
-      <section id="features" className="features">
-        <h2>Our AI Features</h2>
-        <div className="feature-grid">
-          <div className="feature-card">
-            <h3>Smart Automation</h3>
-            <p>Streamline your business processes with intelligent task automation powered by AI.</p>
-          </div>
-          <div className="feature-card">
-            <h3>Predictive Insights</h3>
-            <p>Leverage data analytics and machine learning to make accurate and informed decisions.</p>
-          </div>
-          <div className="feature-card">
-            <h3>Natural Language Processing</h3>
-            <p>Communicate naturally with AI that understands and responds like a human.</p>
-          </div>
-        </div>
+
+
+      {/* Contact / Form */}
+      <section id="contact" className="section form-section">
+        <h2>Login / Signup</h2>
+        <form onSubmit={validateForm}>
+          <input
+            type="email"
+            placeholder="Enter Gmail"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+          />
+          {errors.email && <p className="error">{errors.email}</p>}
+
+          <input
+            type="password"
+            placeholder="Enter Password"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+          />
+          {errors.password && <p className="error">{errors.password}</p>}
+
+          <button type="submit">Submit</button>
+
+          {success && (
+            <p style={{ color: "limegreen", marginTop: "10px" }}>{success}</p>
+          )}
+        </form>
+        <img
+          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1000&q=80"
+          alt="Contact developer"
+          className="contact-img"
+        />
       </section>
-
-      {/* CSS in same file */}
-      <style>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        body {
-          font-family: "Poppins", sans-serif;
-          background-color: #f8f9fa;
-        }
-
-        .navbar {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          background-color: #004aad; /* Deep blue */
-          color: white;
-          padding: 15px 25px;
-          position: relative;
-        }
-
-        .logo {
-          font-size: 1.6rem;
-          font-weight: bold;
-          letter-spacing: 1px;
-        }
-
-        .nav-links {
-          display: flex;
-          gap: 20px;
-        }
-
-        .nav-item {
-          color: white;
-          text-decoration: none;
-          position: relative;
-          transition: color 0.3s ease;
-        }
-
-        .nav-item::after {
-          content: "";
-          position: absolute;
-          width: 0%;
-          height: 2px;
-          bottom: -4px;
-          left: 0;
-          background-color: #fff;
-          transition: width 0.3s ease;
-        }
-
-        .nav-item:hover::after {
-          width: 100%;
-        }
-
-        .nav-item:hover {
-          color: #ffd700;
-        }
-
-        .hamburger {
-          display: none;
-          flex-direction: column;
-          cursor: pointer;
-          gap: 5px;
-        }
-
-        .hamburger span {
-          width: 25px;
-          height: 3px;
-          background-color: white;
-          transition: all 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-          transform: rotate(45deg) translateY(8px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-          opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-          transform: rotate(-45deg) translateY(-8px);
-        }
-
-        @media (max-width: 768px) {
-          .nav-links {
-            display: none;
-            position: absolute;
-            top: 60px;
-            right: 0;
-            flex-direction: column;
-            background-color: #004aad;
-            width: 100%;
-            text-align: center;
-            padding: 15px 0;
-          }
-
-          .nav-links.open {
-            display: flex;
-            animation: slideDown 0.3s ease forwards;
-          }
-
-          .hamburger {
-            display: flex;
-          }
-        }
-
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        /* Hero Section */
-        .hero-section {
-          text-align: center;
-          padding: 80px 20px;
-          background: linear-gradient(to right, #004aad, #007bff);
-          color: white;
-        }
-
-        .hero-section h1 {
-          font-size: 2.5rem;
-          margin-bottom: 20px;
-        }
-
-        .hero-section p {
-          max-width: 700px;
-          margin: 0 auto 30px;
-          line-height: 1.6;
-          font-size: 1.1rem;
-        }
-
-        .cta-button {
-          background-color: white;
-          color: #004aad;
-          border: none;
-          padding: 12px 25px;
-          border-radius: 25px;
-          font-weight: bold;
-          cursor: pointer;
-          transition: background 0.3s ease;
-        }
-
-        .cta-button:hover {
-          background-color: #ffd700;
-          color: #004aad;
-        }
-
-        /* Features */
-        .features {
-          padding: 60px 20px;
-          text-align: center;
-        }
-
-        .features h2 {
-          font-size: 2rem;
-          color: #004aad;
-          margin-bottom: 40px;
-        }
-
-        .feature-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 20px;
-        }
-
-        .feature-card {
-          background: white;
-          padding: 20px;
-          border-radius: 12px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-          transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-          transform: translateY(-5px);
-        }
-
-        .feature-card h3 {
-          color: #004aad;
-          margin-bottom: 10px;
-        }
-
-        .feature-card p {
-          font-size: 0.95rem;
-          color: #333;
-        }
-      `}</style>
     </>
   );
 }
