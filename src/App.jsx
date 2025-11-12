@@ -1,203 +1,255 @@
 import React, { useState } from "react";
 
-export default function SimpleFormValidation() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-
-  // ✅ Improved Email Regex — ensures valid domain extensions
-  const emailRegex =
-    /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|org|net|in|co|edu|gov|io|ai|us|uk|info|biz|me)(\.[A-Za-z]{2})?$/;
-
-  // ✅ Name regex (added, since your old code referenced nameRegex but didn’t define it)
-  const nameRegex = /^[A-Za-z\s]+$/;
-
-  // Validation function
-  const validate = () => {
-    let newErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    } else if (!nameRegex.test(formData.name)) {
-      newErrors.name = "Name should contain only letters";
-    }
-
-    if (!formData.email) newErrors.email = "Email is required";
-    else if (!emailRegex.test(formData.email))
-      newErrors.email = "Invalid email format";
-
-    if (!formData.password) newErrors.password = "Password is required";
-    else if (formData.password.length < 6)
-      newErrors.password = "Password must be at least 6 characters";
-
-    return newErrors;
-  };
-
-  // Handle input change
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
-    setSuccess("");
-  };
-
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length === 0) {
-      setSuccess("✅ Form submitted successfully!");
-      setFormData({ name: "", email: "", password: "" });
-    } else {
-      setSuccess("");
-    }
-  };
+export default function ResponsiveNavbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#007bff",
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "400px",
-          width: "90%",
-          padding: "20px",
-          backgroundColor: "#fff",
-          borderRadius: "10px",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-        }}
-      >
-        <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#007bff" }}>
-          Simple Form Validation
-        </h2>
+    <>
+      <nav className="navbar">
+        <div className="logo">NOVA AI</div>
 
-        <form onSubmit={handleSubmit}>
-          {/* Name Field */}
-          <div style={{ marginBottom: "15px" }}>
-            <label>Name:</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              style={{
-                width: "100%",
-                padding: "8px",
-                marginTop: "5px",
-                border:
-                  errors.name && !formData.name.trim()
-                    ? "1px solid red"
-                    : "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-              placeholder="Enter your name"
-            />
-            {errors.name && <small style={{ color: "red" }}>{errors.name}</small>}
+        <div className={`nav-links ${menuOpen ? "open" : ""}`}>
+          <a href="#home" className="nav-item">Home</a>
+          <a href="#about" className="nav-item">About</a>
+          <a href="#features" className="nav-item">Features</a>
+          <a href="#contact" className="nav-item">Contact</a>
+        </div>
+
+        <div
+          className={`hamburger ${menuOpen ? "active" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
+
+      {/* AI-related content section */}
+      <section id="home" className="hero-section">
+        <h1>Welcome to NOVA AI</h1>
+        <p>
+          Empowering the future with intelligent solutions. NOVA AI brings 
+          cutting-edge artificial intelligence tools to automate workflows, 
+          enhance decision-making, and transform how you interact with technology.
+        </p>
+        <button className="cta-button">Explore AI Tools</button>
+      </section>
+
+      <section id="features" className="features">
+        <h2>Our AI Features</h2>
+        <div className="feature-grid">
+          <div className="feature-card">
+            <h3>Smart Automation</h3>
+            <p>Streamline your business processes with intelligent task automation powered by AI.</p>
           </div>
-
-          {/* Email Field */}
-          <div style={{ marginBottom: "15px" }}>
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              style={{
-                width: "100%",
-                padding: "8px",
-                marginTop: "5px",
-                border: errors.email ? "1px solid red" : "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-              placeholder="example@gmail.com"
-            />
-            {errors.email && <small style={{ color: "red" }}>{errors.email}</small>}
+          <div className="feature-card">
+            <h3>Predictive Insights</h3>
+            <p>Leverage data analytics and machine learning to make accurate and informed decisions.</p>
           </div>
-
-          {/* Password Field */}
-          <div style={{ marginBottom: "15px" }}>
-            <label>Password:</label>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                style={{
-                  width: "100%",
-                  padding: "8px",
-                  marginTop: "5px",
-                  border: errors.password ? "1px solid red" : "1px solid #ccc",
-                  borderRadius: "5px",
-                }}
-                placeholder="Enter password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                style={{
-                  marginLeft: "5px",
-                  padding: "5px 10px",
-                  borderRadius: "5px",
-                  border: "none",
-                  cursor: "pointer",
-                  background: "#007bff",
-                  color: "#fff",
-                }}
-              >
-                {showPassword ? "Hide" : "Show"}
-              </button>
-            </div>
-            {errors.password && (
-              <small style={{ color: "red" }}>{errors.password}</small>
-            )}
+          <div className="feature-card">
+            <h3>Natural Language Processing</h3>
+            <p>Communicate naturally with AI that understands and responds like a human.</p>
           </div>
+        </div>
+      </section>
 
-          <button
-            type="submit"
-            style={{
-              width: "100%",
-              padding: "10px",
-              backgroundColor: "#28a745",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Submit
-          </button>
+      {/* CSS in same file */}
+      <style>{`
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
 
-          {success && (
-            <p
-              style={{
-                color: "green",
-                marginTop: "15px",
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              {success}
-            </p>
-          )}
-        </form>
-      </div>
-    </div>
+        body {
+          font-family: "Poppins", sans-serif;
+          background-color: #f8f9fa;
+        }
+
+        .navbar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #004aad; /* Deep blue */
+          color: white;
+          padding: 15px 25px;
+          position: relative;
+        }
+
+        .logo {
+          font-size: 1.6rem;
+          font-weight: bold;
+          letter-spacing: 1px;
+        }
+
+        .nav-links {
+          display: flex;
+          gap: 20px;
+        }
+
+        .nav-item {
+          color: white;
+          text-decoration: none;
+          position: relative;
+          transition: color 0.3s ease;
+        }
+
+        .nav-item::after {
+          content: "";
+          position: absolute;
+          width: 0%;
+          height: 2px;
+          bottom: -4px;
+          left: 0;
+          background-color: #fff;
+          transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+          width: 100%;
+        }
+
+        .nav-item:hover {
+          color: #ffd700;
+        }
+
+        .hamburger {
+          display: none;
+          flex-direction: column;
+          cursor: pointer;
+          gap: 5px;
+        }
+
+        .hamburger span {
+          width: 25px;
+          height: 3px;
+          background-color: white;
+          transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+          transform: rotate(45deg) translateY(8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+          transform: rotate(-45deg) translateY(-8px);
+        }
+
+        @media (max-width: 768px) {
+          .nav-links {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            flex-direction: column;
+            background-color: #004aad;
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+          }
+
+          .nav-links.open {
+            display: flex;
+            animation: slideDown 0.3s ease forwards;
+          }
+
+          .hamburger {
+            display: flex;
+          }
+        }
+
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Hero Section */
+        .hero-section {
+          text-align: center;
+          padding: 80px 20px;
+          background: linear-gradient(to right, #004aad, #007bff);
+          color: white;
+        }
+
+        .hero-section h1 {
+          font-size: 2.5rem;
+          margin-bottom: 20px;
+        }
+
+        .hero-section p {
+          max-width: 700px;
+          margin: 0 auto 30px;
+          line-height: 1.6;
+          font-size: 1.1rem;
+        }
+
+        .cta-button {
+          background-color: white;
+          color: #004aad;
+          border: none;
+          padding: 12px 25px;
+          border-radius: 25px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background 0.3s ease;
+        }
+
+        .cta-button:hover {
+          background-color: #ffd700;
+          color: #004aad;
+        }
+
+        /* Features */
+        .features {
+          padding: 60px 20px;
+          text-align: center;
+        }
+
+        .features h2 {
+          font-size: 2rem;
+          color: #004aad;
+          margin-bottom: 40px;
+        }
+
+        .feature-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+        }
+
+        .feature-card {
+          background: white;
+          padding: 20px;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+          transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+          color: #004aad;
+          margin-bottom: 10px;
+        }
+
+        .feature-card p {
+          font-size: 0.95rem;
+          color: #333;
+        }
+      `}</style>
+    </>
   );
 }
