@@ -1,329 +1,533 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 
-// All images are stable Unsplash URLs (professional gym photos).
-export default function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [dark, setDark] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
-  const [errors, setErrors] = useState({});
+// HospitalManagementDashboard.jsx
+// Single-file React + Tailwind UI scaffold for the requested modules.
+// - Default export is the main Dashboard component
+// - Uses Tailwind classes (assumes Tailwind is configured in the project)
+// - Uses recharts for charts (install: recharts)
+// - Uses local reference image at /mnt/data/HMD.png as a decorative preview
 
-  const trainers = [
-    {
-      id: 1,
-      name: "Asha Rao",
-      spec: "Strength Coach",
-      img: "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=800&q=60",
-      bio: "10+ yrs experience in strength & conditioning."
-    },
-    {
-      id: 2,
-      name: "Vikram Patel",
-      spec: "Yoga Instructor",
-      img: "https://cbx-prod.b-cdn.net/COLOURBOX61485964.jpg?width=1600&height=1600&quality=70",
-      bio: "Specializes in mobility, breathwork and flexibility."
-    },
-    {
-      id: 3,
-      name: "Riya Sen",
-      spec: "Cardio & HIIT",
-      img: "https://i.pinimg.com/originals/7f/83/0e/7f830eaf744351c16f22bbaba199256c.jpg",
-      bio: "Group classes, endurance training and HIIT."
-    },
-  ];
+import {
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from "recharts";
 
-  const plans = [
-    { id: 1, name: "Basic", price: "₹999", dur: "1 month", features: ["Access to gym floor", "1 group class / week"] },
-    { id: 2, name: "Pro", price: "₹2499", dur: "3 months", features: ["All Basic features", "4 personal sessions", "Nutrition guide"], recommended: true },
-    { id: 3, name: "Premium", price: "₹4999", dur: "12 months", features: ["Unlimited classes", "Weekly PT check-in", "Sauna access"] },
-  ];
+import {
+  LayoutDashboard,
+  Users,
+  Stethoscope,
+  CalendarCheck,
+  FileText,
+  Bed,
+  Pill,
+  Bell,
+  Settings,
+} from "lucide-react";
 
-  const testimonials = [
-    { id: 1, name: "Suresh", quote: "Lost 8kg in 3 months — trainers pushed me the right way.", stars: 5 },
-    { id: 2, name: "Anita", quote: "Supportive community and great classes.", stars: 5 },
-    { id: 3, name: "Ravi", quote: "Best gym equipment & clean spaces.", stars: 4 },
-  ];
+const sampleWeekly = [
+  { day: "Mon", visits: 120 },
+  { day: "Tue", visits: 140 },
+  { day: "Wed", visits: 200 },
+  { day: "Thu", visits: 160 },
+  { day: "Fri", visits: 210 },
+  { day: "Sat", visits: 170 },
+  { day: "Sun", visits: 110 },
+];
 
-  const galleryImages = [
-    "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=60",
-    "https://cbx-prod.b-cdn.net/COLOURBOX61645975.jpg?width=1600&height=1600&quality=70",
-    "https://tse4.mm.bing.net/th/id/OIP.9ZeyTTmhh4fv0Q0hcvWJhQHaEK?pid=Api&P=0&h=180",
-    "https://cdn.freepixel.com/preview/free-photos-a-large-man-in-a-gym-flexing-his-muscles-and-lifting-weights-he-is-wearing-a-black-tank-top-and-appe-preview-1004031861.jpg",
-    "https://cdn.freepixel.com/preview/free-photos-a-young-man-standing-in-a-gym-with-his-arm-resting-on-a-muscle-building-machine-he-appears-to-be-a-f-preview-100399401.jpg",
-  "https://cdn.freepixel.com/preview/free-photos-a-young-man-at-a-gym-focusing-on-his-strength-training-routine-he-is-standing-with-his-feet-shoulder-preview-1004048933.jpg",
-    
-    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1549576490-b0b4831ef60a?auto=format&fit=crop&w=800&q=60"
-  ];
+const sampleMonthly = [
+  { month: "Jan", revenue: 20 },
+  { month: "Feb", revenue: 30 },
+  { month: "Mar", revenue: 25 },
+  { month: "Apr", revenue: 55 },
+  { month: "May", revenue: 40 },
+  { month: "Jun", revenue: 70 },
+  { month: "Jul", revenue: 60 },
+  { month: "Aug", revenue: 50 },
+];
 
-  function validate() {
-    const e = {};
-    if (!form.name.trim()) e.name = "Name is required";
-    if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(form.email)) e.email = "Valid email required";
-    if (!/^[0-9]{10}$/.test(form.phone)) e.phone = "Enter 10 digit phone";
-    if (!form.message.trim()) e.message = "Please tell us how we can help";
-    setErrors(e);
-    return Object.keys(e).length === 0;
+const mockPatients = Array.from({ length: 57 }).map((_, i) => ({
+  id: i + 1,
+  name: ["Anita Patel", "John Doe", "Sarah Lee", "Michael Chen"][
+    i % 4
+  ],
+  age: 20 + (i % 60),
+  gender: i % 2 === 0 ? "F" : "M",
+  phone: `555-010${(i % 10)}${Math.floor(i / 10)}`,
+  status: i % 3 === 0 ? "Active" : "Inactive",
+}));
+
+const mockDoctors = [
+  { id: 1, name: "Dr. Smith", specialization: "Cardiology", avail: true },
+  { id: 2, name: "Dr. Brown", specialization: "Dermatology", avail: false },
+  { id: 3, name: "Dr. Johnson", specialization: "Orthopedics", avail: true },
+  { id: 4, name: "Dr. Williams", specialization: "Pediatrics", avail: true },
+];
+
+const mockAppointments = [
+  { id: 1, patient: "Anita Patel", doctor: "Dr. Smith", date: "Jun 14", status: "Pending" },
+  { id: 2, patient: "John Doe", doctor: "Dr. Brown", date: "Jun 15", status: "Confirmed" },
+  { id: 3, patient: "Sarah Lee", doctor: "Dr. Johnson", date: "Jun 16", status: "Cancelled" },
+  { id: 4, patient: "Michael Chen", doctor: "Dr. Williams", date: "Jun 17", status: "Confirmed" },
+];
+
+const mockMedicines = [
+  { id: 1, name: "Paracetamol", stock: 120, expiry: "2026-02-01" },
+  { id: 2, name: "Amoxicillin", stock: 8, expiry: "2024-12-01" },
+  { id: 3, name: "Ibuprofen", stock: 45, expiry: "2025-05-12" },
+];
+
+// Simple role-based visibility helper
+const useRole = (initial = "admin") => {
+  const [role, setRole] = useState(initial);
+  const can = useMemo(() => ({
+    isAdmin: role === "admin",
+    isDoctor: role === "doctor",
+    isReception: role === "reception",
+  }), [role]);
+  return { role, setRole, can };
+};
+
+function IconNotification({ count }) {
+  return (
+    <div className="relative inline-block">
+      <button className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center">🔔</button>
+      {count > 0 && (
+        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">{count}</span>
+      )}
+    </div>
+  );
+}
+
+function SummaryCard({ title, value, icon: Icon }) {
+  return (
+    <div className="bg-white p-4 rounded-xl shadow flex items-center justify-between h-full">
+      <div>
+        <h3 className="text-sm font-semibold text-gray-600">{title}</h3>
+        <p className="text-2xl font-bold text-gray-900">{value}</p>
+      </div>
+
+      <div className="p-3 bg-blue-100 rounded-full">
+        {Icon && <Icon size={28} className="text-blue-600" />}
+      </div>
+    </div>
+  );
+}
+
+function PatientsTable({ patients, onAdd }) {
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const perPage = 10;
+
+  const filtered = patients.filter((p) =>
+    `${p.name} ${p.phone}`.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const pageCount = Math.ceil(filtered.length / perPage);
+  const pageData = filtered.slice((page - 1) * perPage, page * perPage);
+
+  return (
+    <div className="bg-white shadow rounded-lg p-4">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">Patients</h3>
+        <div className="flex items-center gap-2">
+          <input
+            className="border rounded px-2 py-1"
+            placeholder="Search patients..."
+            value={query}
+            onChange={(e) => { setQuery(e.target.value); setPage(1); }}
+          />
+          <button onClick={onAdd} className="bg-blue-600 text-white px-3 py-1 rounded">Add New</button>
+        </div>
+      </div>
+      <table className="w-full text-sm table-auto">
+        <thead>
+          <tr className="text-left text-gray-500">
+            <th className="p-2">#</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Phone</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pageData.map((p) => (
+            <tr key={p.id} className="border-t">
+              <td className="p-2">{p.id}</td>
+              <td>{p.name}</td>
+              <td>{p.age}</td>
+              <td>{p.phone}</td>
+              <td>{p.status}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="flex justify-between items-center mt-3">
+        <div className="text-sm text-gray-500">{filtered.length} results</div>
+        <div className="flex gap-2">
+          <button onClick={() => setPage((s) => Math.max(1, s - 1))} className="px-2 py-1 border rounded">Prev</button>
+          <div className="px-3 py-1 border rounded">{page} / {pageCount || 1}</div>
+          <button onClick={() => setPage((s) => Math.min(pageCount, s + 1))} className="px-2 py-1 border rounded">Next</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DoctorsGrid({ doctors, onToggle }) {
+  const [special, setSpecial] = useState("all");
+  const specialList = ["all", ...new Set(doctors.map((d) => d.specialization))];
+
+  const filtered = doctors.filter((d) => special === "all" || d.specialization === special);
+
+  return (
+    <div className="bg-white shadow rounded-lg p-4">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">Doctors</h3>
+        <select className="border px-2 py-1 rounded" value={special} onChange={(e) => setSpecial(e.target.value)}>
+          {specialList.map((s) => (<option key={s} value={s}>{s}</option>))}
+        </select>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {filtered.map((d) => (
+          <div className="p-3 border rounded flex items-center justify-between" key={d.id}>
+            <div>
+              <div className="font-semibold">{d.name}</div>
+              <div className="text-xs text-gray-500">{d.specialization}</div>
+            </div>
+            <div>
+              <label className="inline-flex items-center gap-2">
+                <input type="checkbox" checked={d.avail} onChange={() => onToggle(d.id)} />
+                <span className="text-xs">Available</span>
+              </label>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AppointmentsTable({ appointments }) {
+  return (
+    <div className="bg-white shadow rounded-lg p-4">
+      <h3 className="text-lg font-semibold mb-3">Upcoming Appointments</h3>
+      <table className="w-full text-sm table-auto">
+        <thead>
+          <tr className="text-left text-gray-500">
+            <th className="p-2">Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {appointments.map((a) => (
+            <tr key={a.id} className="border-t">
+              <td className="p-2">{a.patient}</td>
+              <td>{a.doctor}</td>
+              <td>{a.date}</td>
+              <td>
+                <span className={`px-2 py-1 rounded text-xs ${a.status === "Confirmed" ? "bg-green-100 text-green-700" : a.status === "Pending" ? "bg-orange-100 text-orange-700" : "bg-red-100 text-red-700"
+                  }`}>{a.status}</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function BillingForm() {
+  const [items, setItems] = useState([
+    { id: 1, desc: "Consultation", qty: 1, price: 50 },
+  ]);
+
+  function updateItem(i, key, val) {
+    setItems((cur) => cur.map((it) => (it.id === i ? { ...it, [key]: val } : it)));
   }
 
-  function handleSubmit(ev) {
-    ev.preventDefault();
-    if (!validate()) return;
-    alert("Thanks! Your message has been recorded (demo).");
-    setForm({ name: "", email: "", phone: "", message: "" });
+  const total = items.reduce((s, it) => s + it.qty * it.price, 0);
+
+  return (
+    <div className="bg-white shadow rounded-lg p-4">
+      <h3 className="text-lg font-semibold">Billing</h3>
+      <table className="w-full text-sm mt-3">
+        <thead>
+          <tr className="text-left text-gray-500"><th>Description</th><th>Qty</th><th>Price</th><th></th></tr>
+        </thead>
+        <tbody>
+          {items.map((it) => (
+            <tr key={it.id} className="border-t">
+              <td className="p-2"><input className="w-full border rounded px-2 py-1" value={it.desc} onChange={(e) => updateItem(it.id, 'desc', e.target.value)} /></td>
+              <td><input type="number" min={0} className="w-20 border rounded px-1 py-1" value={it.qty} onChange={(e) => updateItem(it.id, 'qty', Number(e.target.value) || 0)} /></td>
+              <td><input type="number" min={0} className="w-28 border rounded px-1 py-1" value={it.price} onChange={(e) => updateItem(it.id, 'price', Number(e.target.value) || 0)} /></td>
+              <td><button className="text-red-500" onClick={() => setItems((cur) => cur.filter(x => x.id !== it.id))}>Remove</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="flex justify-between items-center mt-3">
+        <button onClick={() => setItems((cur) => [...cur, { id: Date.now(), desc: '', qty: 1, price: 0 }])} className="px-3 py-1 border rounded">Add Item</button>
+        <div className="text-lg font-semibold">Total: ${total.toFixed(2)}</div>
+      </div>
+    </div>
+  );
+}
+
+function BedsGrid() {
+  const beds = [
+    { id: 1, ward: 'ICU', status: 'occupied' },
+    { id: 2, ward: 'General', status: 'available' },
+    { id: 3, ward: 'Emergency', status: 'cleaning' },
+    { id: 4, ward: 'General', status: 'available' },
+  ];
+
+  const color = (s) => s === 'available' ? 'bg-green-100 text-green-700' : s === 'occupied' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700';
+
+  return (
+    <div className="bg-white shadow rounded-lg p-4">
+      <h3 className="text-lg font-semibold mb-3">Beds</h3>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {beds.map(b => (
+          <div key={b.id} className="p-3 border rounded">
+            <div className="font-medium">Bed {b.id}</div>
+            <div className="text-xs text-gray-500">{b.ward}</div>
+            <div className={`mt-2 inline-block px-2 py-1 rounded text-xs ${color(b.status)}`}>{b.status}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PharmacyTable({ medicines }) {
+  return (
+    <div className="bg-white shadow rounded-lg p-4">
+      <h3 className="text-lg font-semibold mb-3">Pharmacy Inventory</h3>
+      <table className="w-full text-sm">
+        <thead className="text-left text-gray-500"><tr><th>Name</th><th>Stock</th><th>Expiry</th></tr></thead>
+        <tbody>
+          {medicines.map(m => (
+            <tr key={m.id} className={`border-t ${m.stock < 10 ? 'bg-red-50' : ''}`}>
+              <td className="p-2">{m.name}</td>
+              <td>{m.stock}</td>
+              <td>{m.expiry}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// Added basic routing and navigation between pages
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+export default function HospitalManagementDashboard() {
+  const { role, setRole, can } = useRole('admin');
+  const [patients] = useState(mockPatients);
+  const [doctors, setDoctors] = useState(mockDoctors);
+  const [appointments] = useState(mockAppointments);
+  const [medicines] = useState(mockMedicines);
+  const [notifCount] = useState(3);
+  const [tab, setTab] = useState("dashboard");
+
+  function toggleDoctor(id) {
+    setDoctors((cur) => cur.map(d => d.id === id ? { ...d, avail: !d.avail } : d));
   }
 
   return (
-    <div className={dark ? "dark" : ""}>
-      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-        {/* NAVBAR */}
-        <header className="fixed w-full z-30 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
-          <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
-            <div className="flex items-center gap-3">
-              <div className="text-2xl font-bold">BeastGym</div>
-              <nav className="hidden md:flex gap-6 ml-6">
-                <a href="#home" className="hover:underline">Home</a>
-                <a href="#about" className="hover:underline">About</a>
-                <a href="#trainers" className="hover:underline">Trainers</a>
-                <a href="#plans" className="hover:underline">Plans</a>
-                <a href="#gallery" className="hover:underline">Gallery</a>
-                <a href="#contact" className="hover:underline">Contact</a>
-              </nav>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button onClick={() => setDark(!dark)} className="px-3 py-1 rounded-md border">
-                {dark ? "Light" : "Dark"}
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-[1300px] mx-auto grid grid-cols-12 gap-6">
+        <aside className="col-span-12 md:col-span-3 lg:col-span-2">
+          <div className="bg-white p-4 rounded-lg shadow">
+            {/* <img src="/mnt/data/HMD.png" alt="preview" className="w-full rounded mb-4" /> */}
+            <nav className="flex flex-col gap-2 text-sm mt-12">
+              <button
+                onClick={() => setTab("dashboard")}
+                className={`flex items-center gap-2 px-3 py-2 rounded w-full
+    ${tab === "dashboard" ? "bg-blue-600 text-white" : "text-black"}
+  `}
+              >
+                <LayoutDashboard size={18} />
+                Dashboard
               </button>
-              <a href="#contact" className="hidden md:inline-block bg-red-600 text-white px-4 py-2 rounded-lg">Join Now</a>
 
-              <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
-                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+              <button
+                onClick={() => setTab("patients")}
+                className={`flex items-center gap-2 px-3 py-2 rounded w-full
+    ${tab === "patients" ? "bg-blue-600 text-white" : "text-black"}
+  `}
+              >
+                <Users size={18} />
+                Patients
               </button>
+
+              <button
+                onClick={() => setTab("doctors")}
+                className={`flex items-center gap-2 px-3 py-2 rounded w-full
+    ${tab === "doctors" ? "bg-blue-600 text-white" : "text-black"}
+  `}
+              >
+                <Stethoscope size={18} />
+                Doctors
+              </button>
+
+              <button
+                onClick={() => setTab("appointments")}
+                className={`flex items-center gap-2 px-3 py-2 rounded w-full
+    ${tab === "appointments" ? "bg-blue-600 text-white" : "text-black"}
+  `}
+              >
+                <CalendarCheck size={18} />
+                Appointments
+              </button>
+
+              <button
+                onClick={() => setTab("billing")}
+                className={`flex items-center gap-2 px-3 py-2 rounded w-full
+    ${tab === "billing" ? "bg-blue-600 text-white" : "text-black"}
+  `}
+              >
+                <FileText size={18} />
+                Billing
+              </button>
+
+              <button
+                onClick={() => setTab("beds")}
+                className={`flex items-center gap-2 px-3 py-2 rounded w-full
+    ${tab === "beds" ? "bg-blue-600 text-white" : "text-black"}
+  `}
+              >
+                <Bed size={18} />
+                Beds
+              </button>
+
+              <button
+                onClick={() => setTab("pharmacy")}
+                className={`flex items-center gap-2 px-3 py-2 rounded w-full
+    ${tab === "pharmacy" ? "bg-blue-600 text-white" : "text-black"}
+  `}
+              >
+                <Pill size={18} />
+                Pharmacy
+              </button>
+
+              <button
+                onClick={() => setTab("Setting")}
+                className={`flex items-center gap-2 px-3 py-2 rounded w-full
+    ${tab === "Setting" ? "bg-blue-600 text-white" : "text-black"}
+  `}
+              >
+                <Settings size={18} />
+                Setting
+              </button>
+
+              <button
+                onClick={() => setTab("Notification")}
+                className={`flex items-center gap-2 px-3 py-2 rounded w-full
+    ${tab === "Notification" ? "bg-blue-600 text-white" : "text-black"}
+  `}
+              >
+                <Bell size={18} />
+                Notification
+              </button>
+            </nav>
+            <div className="mt-4">
+              <label className="text-xs">Role</label>
+              <select value={role} onChange={(e) => setRole(e.target.value)} className="w-full mt-1 border rounded px-2 py-1 text-sm">
+                <option value="admin">Admin</option>
+                <option value="doctor">Doctor</option>
+                <option value="reception">Receptionist</option>
+              </select>
             </div>
           </div>
+        </aside>
 
-          {menuOpen && (
-            <div className="md:hidden p-4 border-t">
-              <nav className="flex flex-col gap-3">
-                <a href="#home" onClick={() => setMenuOpen(false)}>Home</a>
-                <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
-                <a href="#trainers" onClick={() => setMenuOpen(false)}>Trainers</a>
-                <a href="#plans" onClick={() => setMenuOpen(false)}>Plans</a>
-                <a href="#gallery" onClick={() => setMenuOpen(false)}>Gallery</a>
-                <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
-              </nav>
+        <main className="col-span-12 md:col-span-9 lg:col-span-10">
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-2xl font-bold">Hospital Management Dashboard</h1>
+            <div className="flex items-center gap-4">
+              <IconNotification count={notifCount} />
+              <div className="text-sm">Signed in as <strong>{role}</strong></div>
             </div>
+          </div>
+          {tab === "dashboard" && (
+            <>
+
+              {/* Summary cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6 h-18">
+                <SummaryCard title="Patients" value={1200} icon={Users} />
+                <SummaryCard title="Doctors" value={150} icon={Stethoscope} />
+                <SummaryCard title="Appointments" value={300} icon={CalendarCheck} />
+                <SummaryCard title="Beds" value={80} icon={Bed} />
+              </div>
+
+              {/* Charts */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+                <div className="bg-white p-4 rounded shadow">
+                  <h3 className="font-semibold mb-3">Weekly Visits</h3>
+                  <div style={{ height: 400 }}>
+                    <ResponsiveContainer width="100%" height={400}>
+                      <BarChart data={sampleWeekly}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="day" />
+                        <YAxis />
+                        <Tooltip />
+                        <Bar dataKey="visits" fill="#2563eb"/>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+                <div className="bg-white p-4 rounded shadow">
+                  <h3 className="font-semibold mb-3">Monthly Revenue</h3>
+                  <div style={{ height: 400 }}>
+                    <ResponsiveContainer width="100%" height={400}>
+                      <LineChart data={sampleMonthly}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line type="monotone" dataKey="revenue" stroke="#3182ce" strokeWidth={2} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </div>
+            </>
           )}
-        </header>
 
-        {/* HERO with IMAGE (Option 1) */}
-        <section id="home" className="pt-20 relative">
-          <div
-            className="h-[60vh] md:h-[80vh] w-full overflow-hidden relative rounded-b-3xl bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1600&q=80')"
-            }}
-          >
-            <div className="absolute inset-0 bg-black/45 flex items-center">
-              <div className="max-w-6xl mx-auto px-6 text-center">
-                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">Train Hard. Get Strong. Live Better.</h1>
-                <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto">Personalized plans, pro trainers, and a community that keeps you motivated — start your transformation today.</p>
-                <div className="mt-6 flex justify-center gap-4">
-                  <a href="#plans" className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg">Join Now</a>
-                  <a href="#about" className="px-6 py-3 rounded-lg border">Learn More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+          {tab === "patients" && (
+            <PatientsTable patients={patients} onAdd={() => alert('Open Add Patient modal (to implement)')} />
+          )}
+          {tab === "appointments" && (
+            <AppointmentsTable appointments={appointments} />
+          )}
+          {tab === "doctors" && (
+            <DoctorsGrid doctors={doctors} onToggle={toggleDoctor} />
+          )}
+          {tab === "billing" && (
+            <BillingForm />
+          )}
 
-        {/* ABOUT */}
-        <section id="about" className="max-w-6xl mx-auto px-6 py-16">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-3xl font-bold">Our Story</h2>
-              <p className="mt-4 text-gray-600 dark:text-gray-300">BeastGym started with a simple idea — help people discover strength through community, consistency and coaching. We offer a full range of classes and programs for every fitness level.</p>
+          {tab === "beds" && (
+            <BedsGrid />
+          )}
 
-              <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <li className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">Cardio Zone</li>
-                <li className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">Yoga Studio</li>
-                <li className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">Weightlifting Area</li>
-                <li className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">CrossFit Box</li>
-              </ul>
-            </div>
+          {tab === "pharmacy" && (
+            <PharmacyTable medicines={medicines} />
+          )}
 
-            <div className="grid grid-cols-2 gap-3">
-              <img alt="gym" src="https://tse4.mm.bing.net/th/id/OIP.i6gizHS38SI3jbt7VAGB6AHaEK?pid=Api&P=0&h=180" className="w-full h-44 object-cover rounded-lg" />
-              <img alt="gym" src="https://wallpaperaccess.com/full/6177852.jpg" className="w-full h-44 object-cover rounded-lg" />
-              <img alt="gym" src="https://images.pexels.com/photos/260352/pexels-photo-260352.jpeg" className="w-full h-44 object-cover rounded-lg" />
-              <img alt="gym" src="https://images.pexels.com/photos/34791500/pexels-photo-34791500.jpeg?_gl=1*22s9c*_ga*MTY2MjE0MTQ1OS4xNzYzNTcwMDcy*_ga_8JE65Q40S6*czE3NjM1NzAwNzEkbzEkZzEkdDE3NjM1NzAxMDkkajIyJGwwJGgw" className="w-full h-44 object-cover rounded-lg" />
-            </div>
-          </div>
-        </section>
-
-        {/* TRAINERS */}
-        <section id="trainers" className="max-w-6xl mx-auto px-6 py-16">
-          <h2 className="text-3xl font-bold text-center">Meet Our Trainers</h2>
-          <p className="text-center mt-2 text-gray-600 dark:text-gray-300">Certified pros who will guide and push you.</p>
-
-          <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {trainers.map(t => (
-              <div key={t.id} className="relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow hover:shadow-xl transition-shadow">
-                <img alt={t.name} src={t.img} className="w-full h-56 object-cover" />
-                <div className="p-4">
-                  <h3 className="font-semibold">{t.name}</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-300">{t.spec}</p>
-                </div>
-                <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center p-4">
-                  <div className="text-center text-white">
-                    <p className="mb-2">{t.bio}</p>
-                    <div className="flex gap-3 justify-center">
-                      <a className="underline" href="#">Instagram</a>
-                      <a className="underline" href="#">LinkedIn</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* PLANS */}
-        <section id="plans" className="max-w-6xl mx-auto px-6 py-16">
-          <h2 className="text-3xl font-bold text-center">Membership Plans</h2>
-          <p className="text-center mt-2 text-gray-600 dark:text-gray-300">Choose a plan that fits your goals.</p>
-
-          <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {plans.map(p => (
-              <div key={p.id} className={`p-6 rounded-xl shadow ${p.recommended ? "border-2 border-red-500 scale-105 transform" : "bg-white dark:bg-gray-800"}`}>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold">{p.name}</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-300">{p.dur}</p>
-                  </div>
-                  <div className="text-2xl font-extrabold">{p.price}</div>
-                </div>
-                <ul className="mt-4 space-y-2">
-                  {p.features.map((f, i) => <li key={i} className="text-sm">• {f}</li>)}
-                </ul>
-                <div className="mt-6">
-                  <a href="#contact" className={`block text-center py-2 rounded-md ${p.recommended ? "bg-red-600 text-white" : "border"}`}>Choose</a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* GALLERY */}
-        <section id="gallery" className="max-w-6xl mx-auto px-6 py-16">
-          <h2 className="text-3xl font-bold text-center">Gallery</h2>
-          <p className="text-center mt-2 text-gray-600 dark:text-gray-300">Equipment, classes and transformations.</p>
-
-          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-            {galleryImages.map((img, i) => (
-              <img key={i} alt={`gallery-${i}`} src={img} className="w-full h-36 object-cover rounded-lg" />
-            ))}
-          </div>
-        </section>
-
-        {/* TESTIMONIALS */}
-        <section id="testimonials" className="bg-gray-50 dark:bg-gray-800 py-16">
-          <div className="max-w-4xl mx-auto px-6">
-            <h2 className="text-2xl font-bold text-center">What Members Say</h2>
-            <div className="mt-8 space-y-4">
-              {testimonials.map(t => (
-                <div key={t.id} className="p-4 rounded-lg bg-white dark:bg-gray-700 shadow">
-                  <div className="flex items-center justify-between">
-                    <strong>{t.name}</strong>
-                    <div>{'★'.repeat(t.stars)}</div>
-                  </div>
-                  <p className="mt-2 text-gray-600 dark:text-gray-300">"{t.quote}"</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CONTACT */}
-        <section id="contact" className="max-w-6xl mx-auto px-6 py-16">
-          <h2 className="text-3xl font-bold text-center">Get in touch / Join</h2>
-          <p className="text-center mt-2 text-gray-600 dark:text-gray-300">We’ll contact you to finalize the plan and schedule.</p>
-
-          <div className="mt-8 grid md:grid-cols-2 gap-8">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm">Name</label>
-                <input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className="w-full p-3 rounded border" />
-                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm">Email</label>
-                <input value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="w-full p-3 rounded border" />
-                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm">Phone</label>
-                <input value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} className="w-full p-3 rounded border" />
-                {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm">Message</label>
-                <textarea value={form.message} onChange={e=>setForm({...form,message:e.target.value})} className="w-full p-3 rounded border" rows={4} />
-                {errors.message && <p className="text-red-500 text-sm">{errors.message}</p>}
-              </div>
-
-              <div>
-                <button type="submit" className="bg-red-600 text-white px-6 py-3 rounded">Send Message</button>
-              </div>
-            </form>
-
-            <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-gray-100 dark:bg-gray-800">
-                <h4 className="font-semibold">Contact Info</h4>
-                <p className="text-sm mt-2">Phone: +91 98765 43210</p>
-                <p className="text-sm">Email: hello@beastgym.example</p>
-                <p className="text-sm">Address: 123 Fitness St, Your City</p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-gray-100 dark:bg-gray-800">
-                <h4 className="font-semibold">Opening Hours</h4>
-                <p className="text-sm mt-2">Mon - Fri: 5:30AM - 10:00PM</p>
-                <p className="text-sm">Sat - Sun: 7:00AM - 8:00PM</p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-gray-100 dark:bg-gray-800">
-                <h4 className="font-semibold">Follow Us</h4>
-                <div className="flex gap-3 mt-2">
-                  <a href="#">Instagram</a>
-                  <a href="#">Facebook</a>
-                  <a href="#">Youtube</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FOOTER */}
-        <footer className="bg-gray-900 text-gray-200 py-8">
-          <div className="max-w-6xl mx-auto px-6 text-center">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div>© {new Date().getFullYear()} BeastGym. All rights reserved.</div>
-              <div className="flex gap-4">
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-              </div>
-            </div>
-          </div>
-        </footer>
-
-        {/* FLOATING CTA */}
-        <a href="#contact" className="fixed right-4 bottom-6 bg-red-600 text-white px-4 py-3 rounded-full shadow-lg hidden md:inline-block">Join</a>
-
-      </div>
-    </div>
+        </main>
+      </div >
+    </div >
   );
 }
