@@ -1,11 +1,4 @@
-import React, { useState, useMemo } from "react";
-
-// HospitalManagementDashboard.jsx
-// Single-file React + Tailwind UI scaffold for the requested modules.
-// - Default export is the main Dashboard component
-// - Uses Tailwind classes (assumes Tailwind is configured in the project)
-// - Uses recharts for charts (install: recharts)
-// - Uses local reference image at /mnt/data/HMD.png as a decorative preview
+import { useState, useMemo } from "react";
 
 import {
   LineChart,
