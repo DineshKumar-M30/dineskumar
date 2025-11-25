@@ -1,0 +1,99 @@
+.timetable-page-container {
+    padding: 0 20px 20px;
+}
+
+.page-header h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.timetable-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    padding: 18px;
+}
+
+.timetable-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-group select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-soft);
+    font-size: 13px;
+    background-color: var(--bg-main);
+    outline: none;
+}
+
+.timetable-table-wrapper {
+    overflow-x: auto;
+}
+
+.timetable-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 800px; 
+}
+
+.timetable-table th,
+.timetable-table td {
+    border: 1px solid var(--border-soft);
+    padding: 10px;
+    text-align: center;
+    height: 60px; 
+    font-weight: 500;
+}
+
+.timetable-table thead th {
+    background: #f1f2f5;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.timetable-table td {
+    background: var(--bg-card);
+}
+
+/* Style for the day/period headers */
+.timetable-table tr th:first-child,
+.timetable-table tr td:first-child {
+    background: var(--accent-soft);
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.class-period {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.class-subject {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-main);
+}
+
+.class-teacher {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.break-period {
+    background: #fef2f2; 
+    font-style: italic;
+    color: var(--danger);
+    font-weight: 600;
+}
