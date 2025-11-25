@@ -1,105 +1,198 @@
-body {
-  margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(to bottom right, #1e3a8a, #1e40af, #0f172a);
-  color: white;
+.app {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
 }
 
-.app {
-  min-height: 100vh;
+.sidebar {
+    flex-shrink: 0;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px; 
+    overflow-y: auto; 
+}
+
+/* GRID */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(0, 1.1fr);
+  gap: 18px;
+}
+
+.left-column,
+.right-column {
   display: flex;
   flex-direction: column;
+  gap: 18px;
+}
+
+/* WELCOME CARD */
+
+.welcome-card {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-soft);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Center the left content vertically */
+.welcome-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;       /* ADD THIS */
+  padding: 28px 24px !important;   /* Increase card padding */
+}
+
+/* Increase text size & spacing */
+.welcome-card p {
+  font-size: 15px;      /* bigger */
+  line-height: 1.8;     /* taller text */
+  color: var(--text-muted);
+  max-width: 650px;
+}
+
+.welcome-card h2 {
+  font-size: 26px;      /* bigger title */
+  margin-bottom: 10px; 
+}
+
+.welcome-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  max-width: 700px;
+}
+
+.welcome-illustration {
+  display: flex;
   align-items: center;
-  padding: 2rem;
+  justify-content: center;
 }
 
-.title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+.welcome-person {
+  width: 80px;
+  height: 80px;
+  border-radius: 26px;
+  background: linear-gradient(145deg, #ffb35a, #f97373);
+  position: relative;
 }
 
-.filter-container {
-  margin-bottom: 2rem;
-  font-size: 1rem;
-}
+/* CHARTS ROW */
 
-.filter-container select {
-  background-color: #1e40af;
-  border: 1px solid #60a5fa;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  margin-left: 0.5rem;
-  cursor: pointer;
-}
-
-.filter-container select:focus {
-  outline: none;
-  border-color: #93c5fd;
-}
-
-.card-grid {
+.charts-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 2rem;
-  justify-items: center;
-  width: 100%;
-  max-width: 1000px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+  gap: 18px;
 }
 
-.card {
-  background-color: rgba(37, 99, 235, 0.4);
-  border: 1px solid rgba(147, 197, 253, 0.4);
-  border-radius: 15px;
-  padding: 1.5rem;
-  text-align: center;
-  width: 230px;
-  height: 230px;
-  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* SMALL CALENDAR CARD */
+
+.calendar-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-subtle);
+  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(96, 165, 250, 0.6);
-}
-
-.weather-icon {
-  font-size: 2.5rem;
-}
-
-.card h2 {
-  margin: 0.5rem 0;
-  font-size: 1.3rem;
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
   font-weight: 600;
 }
 
-.temp {
-  font-size: 2rem;
-  font-weight: bold;
+.calendar-controls button {
+  border: none;
+  background: #f1f2fb;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
 }
 
-.condition {
-  text-transform: capitalize;
-  opacity: 0.9;
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
 }
 
-.details {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  opacity: 0.8;
+.calendar-day-name {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 2px;
 }
 
-.footer {
-  margin-top: 2rem;
-  font-size: 0.9rem;
-  opacity: 0.75;
+.calendar-day {
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  font-size: 11px;
+  height: 22px;
+  width: 22px;
+  margin: 0 auto;
+  cursor: pointer;
 }
 
-.highlight {
-  font-weight: bold;
-  color: #60a5fa;
+.calendar-day.active {
+  background: var(--accent);
+  color: white;
+}
+
+
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 900;
+    transition: opacity 0.3s ease;
+    display: none; 
+}
+
+.app.mobile-menu-open .mobile-overlay {
+    display: block; 
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr; 
+  }
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding: 10px; 
+    }
+    
+    .welcome-card {
+        flex-direction: column; 
+    }
+
+    .charts-row {
+        grid-template-columns: 1fr; 
+    }
+
+    .welcome-illustration {
+        width: 100%; 
+        text-align: center;
+    }
 }

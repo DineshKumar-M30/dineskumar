@@ -1,0 +1,60 @@
+/* src/components/NoticeBoard.css */
+.notice-board {
+  margin-top: 4px;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-subtle);
+  padding: 14px 16px;
+}
+
+.notice-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.notice-header h4 {
+  font-size: 14px;
+}
+
+.notice-header button {
+  border: none;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.notice-list {
+  display: grid;
+  grid-template-columns: 1fr; /* ONE BY ONE */
+  gap: 10px;
+}
+
+.notice-item {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+
+.notice-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 9px;
+  border-radius: 999px;
+  margin-bottom: 4px;
+}
+
+.notice-title {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.notice-desc {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}

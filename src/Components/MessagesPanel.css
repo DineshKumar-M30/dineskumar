@@ -1,0 +1,79 @@
+/* src/components/MessagesPanel.css */
+.messages-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-subtle);
+  padding: 14px 16px;
+}
+
+.messages-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.messages-header h4 {
+  font-size: 13px;
+}
+
+.messages-header button {
+  border: none;
+  background: transparent;
+  font-size: 11px;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.messages-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.message-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.message-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.message-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-name {
+  font-size: 12px;
+}
+
+.message-status {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.status-dot {
+  margin-left: auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+
+.status-dot.online {
+  background: var(--success);
+}
+
+.status-dot.offline {
+  background: #9ca3af;
+}
