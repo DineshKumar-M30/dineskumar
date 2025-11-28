@@ -1,10 +1,10 @@
-import React, { useState } from "react"; 
-import { Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Sidebar from "./Components/Sidebar.jsx";
 import Topbar from "./Components/Topbar.jsx";
 
-import StudentsList from "./Components/StudentsList.jsx"; 
+import StudentsList from "./Components/StudentsList.jsx";
 import AddStudentForm from "./Components/AddStudentForm.jsx";
 import FeesManagement from "./Components/FeesManagement.jsx";
 import CalendarPage from "./Components/CalendarPage.jsx";
@@ -14,24 +14,33 @@ import SchoolExpenses from "./Components/SchoolExpenses.jsx";
 import TimeTablePage from "./Components/TimeTablePage.jsx";
 import MessagePage from "./Components/MessagePage.jsx";
 import DashboardContent from "./Components/DashboardContent.jsx";
+import SignIn from "./Components/SignIn.jsx";
 
 
 function App() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const toggleMobileSidebar = () => setIsMobileOpen(prev => !prev);
+  const location = useLocation();
+
+  // Check if current route is sign-in page
+  const isSignInPage = location.pathname === '/signin';
 
   return (
     <div className={`app ${isMobileOpen ? 'mobile-menu-open' : ''}`}>
-      <Sidebar isMobileOpen={isMobileOpen} toggleMobileSidebar={toggleMobileSidebar} />
+      {/* Only show sidebar if not on sign-in page */}
+      {!isSignInPage && <Sidebar isMobileOpen={isMobileOpen} toggleMobileSidebar={toggleMobileSidebar} />}
 
-      <main className="main">
+      <main className={isSignInPage ? '' : 'main'}>
         <Routes>
+          {/* Sign In Route - No Sidebar/Topbar */}
+          <Route path="/signin" element={<SignIn />} />
+
           <Route path="/" element={
             <>
-              <Topbar onMenuToggle={toggleMobileSidebar} /> 
+              <Topbar onMenuToggle={toggleMobileSidebar} />
               <DashboardContent />
             </>
-          } /> 
+          } />
           <Route path="/teachers" element={
             <>
               <Topbar onMenuToggle={toggleMobileSidebar} />
@@ -54,7 +63,7 @@ function App() {
           <Route path="/fees/management" element={
             <>
               <Topbar onMenuToggle={toggleMobileSidebar} />
-              <FeesManagement /> 
+              <FeesManagement />
             </>
           } />
           <Route path="/fees/expenses" element={
@@ -63,7 +72,7 @@ function App() {
               <SchoolExpenses />
             </>
           } />
-        <Route path="/calendar" element={
+          <Route path="/calendar" element={
             <>
               <Topbar onMenuToggle={toggleMobileSidebar} />
               <CalendarPage />
@@ -81,7 +90,7 @@ function App() {
               <MessagePage />
             </>
           } />
-        <Route path="/settings" element={
+          <Route path="/settings" element={
             <>
               <Topbar onMenuToggle={toggleMobileSidebar} />
               <SettingsPage />
