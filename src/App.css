@@ -1,20 +1,20 @@
 .app {
-    display: flex;
-    min-height: 100vh;
-    width: 100%;
+  display: center;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .sidebar {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px; 
-    overflow-y: auto; 
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  overflow-y: auto;
 }
 
 /* GRID */
@@ -48,21 +48,26 @@
 .welcome-card {
   display: flex;
   justify-content: space-between;
-  align-items: center;       /* ADD THIS */
-  padding: 28px 24px !important;   /* Increase card padding */
+  align-items: center;
+  /* ADD THIS */
+  padding: 28px 24px !important;
+  /* Increase card padding */
 }
 
 /* Increase text size & spacing */
 .welcome-card p {
-  font-size: 15px;      /* bigger */
-  line-height: 1.8;     /* taller text */
+  font-size: 15px;
+  /* bigger */
+  line-height: 1.8;
+  /* taller text */
   color: var(--text-muted);
   max-width: 650px;
 }
 
 .welcome-card h2 {
-  font-size: 26px;      /* bigger title */
-  margin-bottom: 10px; 
+  font-size: 26px;
+  /* bigger title */
+  margin-bottom: 10px;
 }
 
 .welcome-card p {
@@ -155,44 +160,44 @@
 
 
 .mobile-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 900;
-    transition: opacity 0.3s ease;
-    display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 900;
+  transition: opacity 0.3s ease;
+  display: none;
 }
 
 .app.mobile-menu-open .mobile-overlay {
-    display: block; 
+  display: block;
 }
 
 /* RESPONSIVE */
 
 @media (max-width: 1100px) {
   .dashboard-grid {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
-    .main {
-        padding: 10px; 
-    }
-    
-    .welcome-card {
-        flex-direction: column; 
-    }
+  .main {
+    padding: 10px;
+  }
 
-    .charts-row {
-        grid-template-columns: 1fr; 
-    }
+  .welcome-card {
+    flex-direction: column;
+  }
 
-    .welcome-illustration {
-        width: 100%; 
-        text-align: center;
-    }
+  .charts-row {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-illustration {
+    width: 100%;
+    text-align: center;
+  }
 }
