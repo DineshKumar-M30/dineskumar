@@ -19,6 +19,9 @@ const menuItems = [
     { name: "Dashboard", path: "/", icon: <AiFillHome size={18} /> },
     { name: "Teachers", path: "/2", icon: <FaChalkboardTeacher size={18} /> },
     { name: "Students", path: "/students", icon: <MdGroups size={18} /> },
+    { name: "Signin", path: "/signin", icon: <MdGroups size={18} /> },
+    { name: "Signup", path: "/signup", icon: <MdGroups size={18} /> },
+
 
     {
         name: "Finance",
@@ -84,12 +87,12 @@ function Sidebar({ isMobileOpen, toggleMobileSidebar }) {
                             to={item.subItems ? '#' : item.path}
                             onClick={() => handleMenuClick(item)}
                             className={`sidebar-link ${item.path === '/'
-                                    ? isDashboardActive
-                                        ? "sidebar-link-active"
-                                        : ""
-                                    : isActive(item.path)
-                                        ? "sidebar-link-active"
-                                        : ""
+                                ? isDashboardActive
+                                    ? "sidebar-link-active"
+                                    : ""
+                                : isActive(item.path)
+                                    ? "sidebar-link-active"
+                                    : ""
                                 }`}
                         >
                             {/* Icon added here */}
@@ -117,8 +120,8 @@ function Sidebar({ isMobileOpen, toggleMobileSidebar }) {
                                         key={subItem.name}
                                         to={subItem.path}
                                         className={`sidebar-sub-link ${location.pathname === subItem.path
-                                                ? "sidebar-sub-link-active"
-                                                : ""
+                                            ? "sidebar-sub-link-active"
+                                            : ""
                                             }`}
                                     >
                                         {/* Submenu icon */}

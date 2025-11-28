@@ -15,6 +15,7 @@ import TimeTablePage from "./Components/TimeTablePage.jsx";
 import MessagePage from "./Components/MessagePage.jsx";
 import DashboardContent from "./Components/DashboardContent.jsx";
 import SignIn from "./Components/SignIn.jsx";
+import SignUp from "./Components/SignUp.jsx";
 
 
 function App() {
@@ -22,18 +23,19 @@ function App() {
   const toggleMobileSidebar = () => setIsMobileOpen(prev => !prev);
   const location = useLocation();
 
-  // Check if current route is sign-in page
-  const isSignInPage = location.pathname === '/signin';
+  // Check if current route is sign-in or sign-up page
+  const isAuthPage = location.pathname === '/signin' || location.pathname === '/signup';
 
   return (
     <div className={`app ${isMobileOpen ? 'mobile-menu-open' : ''}`}>
-      {/* Only show sidebar if not on sign-in page */}
-      {!isSignInPage && <Sidebar isMobileOpen={isMobileOpen} toggleMobileSidebar={toggleMobileSidebar} />}
+      {/* Only show sidebar if not on auth pages */}
+      {!isAuthPage && <Sidebar isMobileOpen={isMobileOpen} toggleMobileSidebar={toggleMobileSidebar} />}
 
-      <main className={isSignInPage ? '' : 'main'}>
+      <main className={isAuthPage ? '' : 'main'}>
         <Routes>
-          {/* Sign In Route - No Sidebar/Topbar */}
+          {/* Auth Routes - No Sidebar/Topbar */}
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
 
           <Route path="/" element={
             <>
