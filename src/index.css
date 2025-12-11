@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@layer utilities {
+    .text-outline {
+        text-shadow:
+            -2px -2px 0 rgba(255, 255, 255, 0.3),
+            2px -2px 0 rgba(255, 255, 255, 0.3),
+            -2px 2px 0 rgba(255, 255, 255, 0.3),
+            2px 2px 0 rgba(255, 255, 255, 0.3);
+    }
+}
