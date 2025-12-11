@@ -1,28 +1,18 @@
-
 import React from "react";
-import "./Topbar.css";
 
-function Topbar({ onMenuToggle }) { 
+export default function Topbar() {
   return (
-    <header className="topbar">
-      <div className="topbar-left">
-        <button className="menu-toggle-btn" onClick={onMenuToggle}>☰</button>
-        <button className="back-btn">←</button>
-        <div className="search-box">
-          <span className="search-icon">🔍</span>
-          <input placeholder="Search" />
-        </div>
-      </div>
+    <div className="w-full h-14 bg-[#242A3E] flex items-center px-6 justify-between">
+      <input
+        placeholder="Search"
+        className="bg-[#1B2033] px-4 py-2 rounded-lg w-72 text-sm outline-none"
+      />
 
-      <div className="topbar-right">
-        <button className="icon-btn">🔔</button>
-        <button className="icon-btn">⚙️</button>
-        <div className="profile-chip">
-          <div className="avatar">A</div>
-        </div>
+      <div className="flex items-center space-x-6 text-xl text-white/70">
+        <span>🔔</span>
+        <span>📩</span>
+        <span>⚙</span>
       </div>
-    </header>
+    </div>
   );
 }
-
-export default Topbar;
