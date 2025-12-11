@@ -24,13 +24,13 @@ export default function Explore() {
               title="Virtual Reality"
               members="345,678 Members"
               online="5,678 Online"
-              image="/vr.png"
+              image="/6.png"
             />
             <CommunityCard
               title="Game Play"
               members="527,955 Members"
               online="28,628 Online"
-              image="/game.png"
+              image="/7.png"
             />
           </div>
 
@@ -39,12 +39,12 @@ export default function Explore() {
             <CommunityCard
               title="3D Art"
               members="345,678 Members"
-              image="/3d.png"
+              image="/9.png"
             />
             <CommunityCard
               title="NFT"
               members="887,789 Members"
-              image="/nft.png"
+              image="/5.png"
             />
           </div>
         </div>
