@@ -181,10 +181,9 @@ function NavItem({
 
         ${isNested ? "pl-11 pr-4 text-slate-400 hover:bg-white/5" : "px-2.5"}
 
-        ${
-          isActiveParent
-            ? "bg-white/5 text-white"
-            : active && !isNested
+        ${isActiveParent
+          ? "bg-white/5 text-white"
+          : active && !isNested
             ? "bg-white/10 text-white"
             : "text-slate-400 hover:text-white hover:bg-white/5"
         }
@@ -200,11 +199,10 @@ function NavItem({
           <span
             className={`
                 text-[10px] font-semibold px-2 py-0.5 rounded-full
-                ${
-                  badgeVariant === "pink"
-                    ? "bg-pink-500/10 text-pink-300"
-                    : "bg-blue-500/10 text-blue-300"
-                }
+                ${badgeVariant === "pink"
+                ? "bg-pink-500/10 text-pink-300"
+                : "bg-blue-500/10 text-blue-300"
+              }
               `}
           >
             {badge}
