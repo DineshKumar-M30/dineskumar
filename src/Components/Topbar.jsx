@@ -106,8 +106,8 @@ export default function Topbar({ onMenuClick }) {
 
             {/* Profile name — hidden on small screens */}
             <div className="hidden sm:flex flex-col leading-tight">
-              <span className="text-xs font-medium">Kathir</span>
-              <span className="text-[10px] text-slate-400">Premium</span>
+              <span className="text-xs font-medium">Dinesh Kumar</span>
+              {/* <span className="text-[10px] text-slate-400">Premium</span> */}
             </div>
 
             {/* Dropdown icon (desktop only) */}
