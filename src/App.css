@@ -1,203 +1,42 @@
-.app {
-  display: center;
-  min-height: 100vh;
-  width: 100%;
-}
-
-.sidebar {
-  flex-shrink: 0;
-}
-
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-/* GRID */
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 2.3fr) minmax(0, 1.1fr);
-  gap: 18px;
-}
-
-.left-column,
-.right-column {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-/* WELCOME CARD */
-
-.welcome-card {
-  background: var(--bg-card);
-  box-shadow: var(--shadow-soft);
-  border-radius: var(--radius-lg);
-  padding: 20px 22px;
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-/* Center the left content vertically */
-.welcome-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* ADD THIS */
-  padding: 28px 24px !important;
-  /* Increase card padding */
-}
-
-/* Increase text size & spacing */
-.welcome-card p {
-  font-size: 15px;
-  /* bigger */
-  line-height: 1.8;
-  /* taller text */
-  color: var(--text-muted);
-  max-width: 650px;
-}
-
-.welcome-card h2 {
-  font-size: 26px;
-  /* bigger title */
-  margin-bottom: 10px;
-}
-
-.welcome-card p {
-  font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.4;
-  max-width: 700px;
-}
-
-.welcome-illustration {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.welcome-person {
-  width: 80px;
-  height: 80px;
-  border-radius: 26px;
-  background: linear-gradient(145deg, #ffb35a, #f97373);
-  position: relative;
-}
-
-/* CHARTS ROW */
-
-.charts-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
-  gap: 18px;
-}
-
-/* SMALL CALENDAR CARD */
-
-.calendar-card {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-subtle);
-  padding: 16px 16px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.calendar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.calendar-controls button {
-  border: none;
-  background: #f1f2fb;
-  width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
-}
-
-.calendar-day-name {
-  font-size: 10px;
-  color: var(--text-muted);
-  text-align: center;
-  margin-bottom: 2px;
-}
-
-.calendar-day {
-  border: none;
-  background: transparent;
-  border-radius: 999px;
-  font-size: 11px;
-  height: 22px;
-  width: 22px;
+/* #root {
+  max-width: 1280px;
   margin: 0 auto;
-  cursor: pointer;
+  padding: 2rem;
+  text-align: center;
 }
 
-.calendar-day.active {
-  background: var(--accent);
-  color: white;
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-
-.mobile-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 900;
-  transition: opacity 0.3s ease;
-  display: none;
-}
-
-.app.mobile-menu-open .mobile-overlay {
-  display: block;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 1100px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
-@media (max-width: 768px) {
-  .main {
-    padding: 10px;
-  }
-
-  .welcome-card {
-    flex-direction: column;
-  }
-
-  .charts-row {
-    grid-template-columns: 1fr;
-  }
-
-  .welcome-illustration {
-    width: 100%;
-    text-align: center;
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
   }
 }
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+} */
