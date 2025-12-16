@@ -1,70 +1,24 @@
 @import "tailwindcss";
-/* Mobile safety */
-@media (max-width: 640px) {
-  body {
-    overflow-x: hidden;
-  }
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #111; /* Dark background like Netflix */
 }
 
-
-.neon-text {
-  text-shadow:
-    0 0 2px rgba(255,255,255,0.85),
-    0 0 10px rgba(178,140,255,0.85),
-    0 0 24px rgba(178,140,255,0.45);
-  color: #dcd7ff;
-  letter-spacing: 2px;
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-.outlined {
-  -webkit-text-stroke: 1px rgba(120,90,190,0.8);
-  color: transparent;
-  text-shadow: 0 0 10px rgba(178,140,255,0.25);
+#root {
+  width: 100%;
 }
-
-.header-accent {
-  background: linear-gradient(90deg, rgba(178,140,255,0.9), rgba(100,255,220,0.6));
-  height: 6px;
-  border-radius: 999px;
-}
-
-.click-to-open {
-  backdrop-filter: blur(6px);
-}
-
-html, body, #root {
-  height: 100%;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.6s ease-out;
-}
-

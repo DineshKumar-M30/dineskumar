@@ -1,11 +1,19 @@
-import React from "react";
-import Hero from "./components/Hero";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomeScreen from './pages/HomeScreen';
+import WatchlistScreen from './pages/WatchlistScreen';
+import SearchScreen from './pages/SearchScreen';
 
-export default function App() {
+function App() {
   return (
-    <div className="min-h-screen bg-cover bg-center" 
-         style={{ backgroundImage: "url('/assets/bg-space.png')" }}>
-      <Hero />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
+        <Route path="/watchlist" element={<WatchlistScreen />} />
+        <Route path="/search" element={<SearchScreen />} />
+      </Routes>
+    </Router>
   );
 }
+
+export default App;
