@@ -1,35 +1,70 @@
 @import "tailwindcss";
-
-@layer base {
+/* Mobile safety */
+@media (max-width: 640px) {
   body {
-    @apply text-slate-700 antialiased;
-    background-color: #f4f7fb;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-x: hidden;
   }
 }
 
 
-.bg-sidebar {
-  background-color: #1a2333; 
+.neon-text {
+  text-shadow:
+    0 0 2px rgba(255,255,255,0.85),
+    0 0 10px rgba(178,140,255,0.85),
+    0 0 24px rgba(178,140,255,0.45);
+  color: #dcd7ff;
+  letter-spacing: 2px;
 }
 
+.outlined {
+  -webkit-text-stroke: 1px rgba(120,90,190,0.8);
+  color: transparent;
+  text-shadow: 0 0 10px rgba(178,140,255,0.25);
+}
 
-html,
-body,
-#root {
+.header-accent {
+  background: linear-gradient(90deg, rgba(178,140,255,0.9), rgba(100,255,220,0.6));
+  height: 6px;
+  border-radius: 999px;
+}
+
+.click-to-open {
+  backdrop-filter: blur(6px);
+}
+
+html, body, #root {
   height: 100%;
 }
 
-.scrollbar-thin {
-  scrollbar-width: none;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.scrollbar-thin::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out;
 }
 
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: rgba(148, 163, 184, 0.7);
-  border-radius: 999px;
-}
