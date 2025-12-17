@@ -41,18 +41,18 @@ function Navbar() {
                 />
 
                 <div className="flex items-center gap-4 fixed right-5 text-white">
-                    <div className={`flex items-center bg-black/50 border border-white/30 rounded px-2 py-1 transition-all duration-300 ${showSearch ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10 hidden'}`}>
-                        <Search className="w-5 h-5 text-gray-400" />
-                        <form onSubmit={handleSearchSubmit}>
-                            <input
-                                className="bg-transparent border-none outline-none text-white text-sm ml-2 w-[150px]"
-                                placeholder="Titles, people, genres"
-                                value={searchInput}
-                                onChange={(e) => setSearchInput(e.target.value)}
-                            />
-                        </form>
+                    <form onSubmit={handleSearchSubmit} className={`flex items-center bg-black/50 border border-white/30 rounded px-2 py-1 transition-all duration-300 ${showSearch ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10 hidden'}`}>
+                        <button type="submit" className="p-0 m-0">
+                            <Search className="w-5 h-5 text-gray-400" />
+                        </button>
+                        <input
+                            className="bg-transparent border-none outline-none text-white text-sm ml-2 w-[150px]"
+                            placeholder="Titles, people, genres"
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                        />
                         <X className="w-4 h-4 text-gray-400 cursor-pointer hover:text-white" onClick={() => setShowSearch(false)} />
-                    </div>
+                    </form>
 
                     {!showSearch && <Search className="w-6 h-6 cursor-pointer hover:text-gray-300" onClick={() => setShowSearch(true)} />}
 
