@@ -9,14 +9,20 @@ export default function CourseListing() {
 
     useEffect(() => {
         const persisted = loadCourses();
-        if (persisted && persisted.length > 0) {
-            setCourses(persisted);
-        } else {
-            // initialize progress map
-            const seeded = mockCourses.map(c => ({ ...c, progress: {} }));
-            setCourses(seeded);
-            saveCourses(seeded);
-        }
+
+        // Merge fresh mock data with persisted progress
+        const mergedCourses = mockCourses.map(mock => {
+            const saved = persisted ? persisted.find(p => p.id === mock.id) : null;
+            return {
+                ...mock,
+                progress: saved ? saved.progress : {}
+            };
+        });
+
+        setCourses(mergedCourses);
+        // We don't necessarily need to save immediately unless we want to sync new structure to LS, 
+        // but saving ensures LS is eventually consistent.
+        saveCourses(mergedCourses);
     }, []);
 
     useEffect(() => {
