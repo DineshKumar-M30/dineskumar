@@ -31,17 +31,15 @@ function Navbar() {
     };
 
     return (
-        <div className={`fixed top-0 w-full h-[64px] p-5 z-50 transition-all duration-300 ease-in ${show ? "bg-black" : "bg-gradient-to-b from-black/80 to-transparent"}`}>
+        <div className={`fixed top-0 w-full h-[64px] px-6 z-50 transition-all duration-300 ease-in ${show ? "glass" : "bg-transparent"}`}>
             <div className="flex justify-between items-center h-full">
-                <img
-                    onClick={() => navigate('/')}
-                    className="fixed left-5 w-24 object-contain cursor-pointer"
-                    src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
-                    alt="Netflix Logo"
-                />
+                <div onClick={() => navigate('/')} className="flex items-center gap-2 cursor-pointer">
+                    <div className="w-8 h-8 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center font-bold text-white text-lg shadow-lg shadow-blue-500/30">L</div>
+                    <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 hidden sm:block">LearnX</span>
+                </div>
 
                 <div className="flex items-center gap-4 fixed right-5 text-white">
-                    <form onSubmit={handleSearchSubmit} className={`flex items-center bg-black/50 border border-white/30 rounded px-2 py-1 transition-all duration-300 ${showSearch ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10 hidden'}`}>
+                    <form onSubmit={handleSearchSubmit} className={`flex items-center glass rounded-full px-3 py-1.5 transition-all duration-300 ${showSearch ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10 hidden'}`}>
                         <button type="submit" className="p-0 m-0">
                             <Search className="w-5 h-5 text-gray-400" />
                         </button>
@@ -56,9 +54,10 @@ function Navbar() {
 
                     {!showSearch && <Search className="w-6 h-6 cursor-pointer hover:text-gray-300" onClick={() => setShowSearch(true)} />}
 
-                    <span className="cursor-pointer hover:text-gray-300 hidden sm:block" onClick={() => navigate('/watchlist')}>My List</span>
+                    <span className="cursor-pointer hover:text-gray-300 hidden sm:block" onClick={() => navigate('/lms/student')}>My Dashboard</span>
+                    <span className="cursor-pointer hover:text-gray-300 hidden sm:block" onClick={() => navigate('/lms/instructor')}>Instructor</span>
                     <Bell className="w-6 h-6 cursor-pointer hover:text-gray-300" />
-                    <div className="w-8 h-8 rounded bg-red-600 flex items-center justify-center cursor-pointer">
+                    <div onClick={() => navigate('/lms/student')} className="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center cursor-pointer shadow-lg hover:ring-2 hover:ring-indigo-400 transition-all">
                         <User className="w-5 h-5" />
                     </div>
                 </div>
