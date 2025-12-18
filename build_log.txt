@@ -1,0 +1,26 @@
+
+> portfolio@0.0.0 build
+> vite build
+
+[36mrolldown-vite v7.2.5 [32mbuilding client environment for production...[36m[39m
+[2Ktransforming...✓ 2111 modules transformed.
+rendering chunks...
+[31m✗[39m Build failed in 1.19s
+[31merror during build:
+[31mBuild failed with 1 error:
+
+[31m[MISSING_EXPORT] Error:[0m "default" is not exported by "src/service-booking/pages/ServiceListing.jsx".
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/service-booking/ServiceBookingApp.jsx:5:8 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m5 │[0m [38;5;249mi[0m[38;5;249mm[0m[38;5;249mp[0m[38;5;249mo[0m[38;5;249mr[0m[38;5;249mt[0m[38;5;249m [0mServiceListing[38;5;249m [0m[38;5;249mf[0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mm[0m[38;5;249m [0m[38;5;249m"[0m[38;5;249m.[0m[38;5;249m/[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mg[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249m/[0m[38;5;249mS[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249mv[0m[38;5;249mi[0m[38;5;249mc[0m[38;5;249me[0m[38;5;249mL[0m[38;5;249mi[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mn[0m[38;5;249mg[0m[38;5;249m"[0m[38;5;249m;[0m
+ [38;5;240m  │[0m        ───────┬──────  
+ [38;5;240m  │[0m               ╰──────── Missing export
+[38;5;246m───╯[0m
+[31m
+    at aggregateBindingErrorsIntoJsError (file:///C:/Users/Dinesh%20Kumar/OneDrive/Desktop/file/dineshkumar/node_modules/rolldown/dist/shared/src-CYkh2Ybc.mjs:2659:18)
+    at unwrapBindingResult (file:///C:/Users/Dinesh%20Kumar/OneDrive/Desktop/file/dineshkumar/node_modules/rolldown/dist/shared/src-CYkh2Ybc.mjs:2634:128)
+    at #build (file:///C:/Users/Dinesh%20Kumar/OneDrive/Desktop/file/dineshkumar/node_modules/rolldown/dist/shared/src-CYkh2Ybc.mjs:4433:34)
+    at async buildEnvironment (file:///C:/Users/Dinesh%20Kumar/OneDrive/Desktop/file/dineshkumar/node_modules/vite/dist/node/chunks/node.js:33468:64)
+    at async Object.build (file:///C:/Users/Dinesh%20Kumar/OneDrive/Desktop/file/dineshkumar/node_modules/vite/dist/node/chunks/node.js:33871:19)
+    at async Object.buildApp (file:///C:/Users/Dinesh%20Kumar/OneDrive/Desktop/file/dineshkumar/node_modules/vite/dist/node/chunks/node.js:33868:153)
+    at async CAC.<anonymous> (file:///C:/Users/Dinesh%20Kumar/OneDrive/Desktop/file/dineshkumar/node_modules/vite/dist/node/cli.js:629:3)[39m

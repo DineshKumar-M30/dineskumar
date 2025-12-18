@@ -3,7 +3,14 @@ import React, { createContext, useReducer, useEffect } from "react";
 // Initial state
 const initialState = {
     watchlist: localStorage.getItem("watchlist")
-        ? JSON.parse(localStorage.getItem("watchlist"))
+        ? (() => {
+            try {
+                return JSON.parse(localStorage.getItem("watchlist"));
+            } catch (e) {
+                console.error("Failed to parse watchlist:", e);
+                return [];
+            }
+        })()
         : [],
 };
 
