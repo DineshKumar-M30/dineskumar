@@ -19,7 +19,7 @@ const ServiceCard = ({ service, showBadge = false }) => {
     return (
         <div className="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group">
             {/* Image Section */}
-            <Link to={`/service-booking/service/${service.id}`} className="relative h-52 overflow-hidden block">
+            <Link to={`/service/${service.id}`} className="relative h-52 overflow-hidden block">
                 <img
                     src={service.image}
                     alt={service.name}
@@ -52,7 +52,7 @@ const ServiceCard = ({ service, showBadge = false }) => {
             <div className="p-5 flex flex-col flex-1">
                 <div className="flex justify-between items-start mb-3">
                     <h3 className="font-bold text-lg text-gray-900 dark:text-white leading-snug line-clamp-2 flex-1 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                        <Link to={`/service-booking/service/${service.id}`}>{service.name}</Link>
+                        <Link to={`/service/${service.id}`}>{service.name}</Link>
                     </h3>
                 </div>
 
@@ -94,8 +94,8 @@ const ServiceCard = ({ service, showBadge = false }) => {
                         onClick={handleAddToCart}
                         disabled={isInCart}
                         className={`px-6 py-2.5 font-semibold rounded-xl shadow-md transition-all transform active:scale-95 ${isInCart
-                                ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 cursor-not-allowed'
-                                : 'bg-purple-600 text-white hover:bg-purple-700 hover:shadow-lg'
+                            ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 cursor-not-allowed'
+                            : 'bg-purple-600 text-white hover:bg-purple-700 hover:shadow-lg'
                             }`}
                     >
                         {isInCart ? 'Added' : 'Add'}

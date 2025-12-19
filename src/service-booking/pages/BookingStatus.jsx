@@ -203,7 +203,7 @@ const BookingStatus = () => {
                     className="text-center"
                 >
                     <Link
-                        to="/service-booking"
+                        to="/"
                         className="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-2xl hover:shadow-2xl transition-all transform hover:scale-105"
                     >
                         Book Another Service

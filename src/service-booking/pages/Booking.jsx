@@ -57,7 +57,7 @@ const Booking = () => {
                             </svg>
                         </div>
                         <p className="text-lg font-semibold text-gray-700 dark:text-slate-300 mb-2">Your cart is empty</p>
-                        <button onClick={() => navigate('/service-booking')} className="mt-4 px-6 py-2 bg-purple-600 text-white font-medium rounded-xl hover:bg-purple-700 transition-colors">
+                        <button onClick={() => navigate('/')} className="mt-4 px-6 py-2 bg-purple-600 text-white font-medium rounded-xl hover:bg-purple-700 transition-colors">
                             Browse Services
                         </button>
                     </div>
@@ -102,8 +102,8 @@ const Booking = () => {
                                     key={addon.id}
                                     onClick={() => toggleAddon(addon)}
                                     className={`p-4 rounded-xl border-2 text-left transition-all ${isSelected
-                                            ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/20'
-                                            : 'border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-purple-300 dark:hover:border-purple-700'
+                                        ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/20'
+                                        : 'border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-purple-300 dark:hover:border-purple-700'
                                         }`}
                                 >
                                     <div className="flex items-start justify-between mb-2">
@@ -156,8 +156,8 @@ const Booking = () => {
                                 key={date.value}
                                 onClick={() => updateBookingDetails({ date: date.value })}
                                 className={`p-3 rounded-2xl border-2 flex flex-col items-center gap-1 transition-all ${bookingDetails.date === date.value
-                                        ? 'border-purple-600 bg-purple-600 text-white shadow-lg scale-105'
-                                        : 'border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:border-purple-300 dark:hover:border-purple-700'
+                                    ? 'border-purple-600 bg-purple-600 text-white shadow-lg scale-105'
+                                    : 'border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:border-purple-300 dark:hover:border-purple-700'
                                     }`}
                             >
                                 <span className="text-xs font-medium opacity-80">{date.day}</span>
@@ -180,10 +180,10 @@ const Booking = () => {
                                 onClick={() => slot.available && updateBookingDetails({ time: slot.time })}
                                 disabled={!slot.available}
                                 className={`p-4 rounded-xl border-2 font-semibold transition-all ${bookingDetails.time === slot.time
-                                        ? 'border-purple-600 bg-purple-600 text-white shadow-md'
-                                        : slot.available
-                                            ? 'border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:border-purple-300 dark:hover:border-purple-700'
-                                            : 'border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-900 text-gray-400 dark:text-slate-600 cursor-not-allowed'
+                                    ? 'border-purple-600 bg-purple-600 text-white shadow-md'
+                                    : slot.available
+                                        ? 'border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:border-purple-300 dark:hover:border-purple-700'
+                                        : 'border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-900 text-gray-400 dark:text-slate-600 cursor-not-allowed'
                                     }`}
                             >
                                 {slot.time}
@@ -332,7 +332,7 @@ const Booking = () => {
             const orderId = Math.floor(100000 + Math.random() * 900000);
             clearCart();
             updateBookingDetails({ orderId });
-            navigate(`/service-booking/bookings/${orderId}`);
+            navigate(`/bookings/${orderId}`);
         } else {
             if (currentStep === 1 && cart.length === 0) return;
             setCurrentStep(prev => prev + 1);
@@ -364,8 +364,8 @@ const Booking = () => {
                                 <React.Fragment key={step.id}>
                                     <div className="flex flex-col items-center gap-2">
                                         <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${isCompleted ? 'bg-green-600 text-white' :
-                                                isActive ? 'bg-purple-600 text-white shadow-lg scale-110' :
-                                                    'bg-gray-200 dark:bg-slate-700 text-gray-400 dark:text-slate-500'
+                                            isActive ? 'bg-purple-600 text-white shadow-lg scale-110' :
+                                                'bg-gray-200 dark:bg-slate-700 text-gray-400 dark:text-slate-500'
                                             }`}>
                                             <Icon size={20} />
                                         </div>

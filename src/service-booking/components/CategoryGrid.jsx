@@ -23,7 +23,7 @@ const CategoryGrid = () => {
                             viewport={{ once: true }}
                             className="flex-shrink-0 w-32 md:w-auto snap-center"
                         >
-                            <Link to={`/service-booking/services/${cat.id}`} className="block group">
+                            <Link to={`/services/${cat.id}`} className="block group">
                                 <div className="bg-gray-50 dark:bg-slate-800 rounded-2xl p-4 md:p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50 h-full flex flex-col items-center text-center gap-4">
                                     <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden shadow-md group-hover:scale-110 transition-transform duration-300 ring-2 ring-white dark:ring-slate-700">
                                         <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />

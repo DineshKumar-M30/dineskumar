@@ -13,7 +13,7 @@ const BookingFooter = ({ itemCount = 0, total = 0, onBook }) => {
                     <span className="text-xl font-bold text-gray-900">₹{total}</span>
                 </div>
                 <Link
-                    to="/service-booking/booking"
+                    to="/booking"
                     className="px-8 py-3 bg-black text-white font-bold rounded-xl flex items-center gap-2 hover:bg-gray-800 transition-colors"
                 >
                     Book Now

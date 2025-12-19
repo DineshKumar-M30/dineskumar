@@ -1,26 +1,11 @@
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Menu, Search, MapPin, User, ShoppingBag, Sun, Moon } from 'lucide-react';
+import { useUser } from '../context/UserContext';
 
 const Navbar = () => {
-    const [darkMode, setDarkMode] = React.useState(() => {
-        if (typeof window !== 'undefined') {
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-
-            // Apply immediately on mount
-            if (isDark) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-
-            return isDark;
-        }
-        return false;
-    });
-
+    const { theme, toggleTheme } = useUser();
+    const darkMode = theme === 'dark';
     const [isScrolled, setIsScrolled] = React.useState(false);
 
     React.useEffect(() => {
@@ -31,23 +16,13 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    React.useEffect(() => {
-        if (darkMode) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
-    }, [darkMode]);
-
     return (
         <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-4'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo & Location */}
                     <div className="flex items-center gap-8">
-                        <Link to="/service-booking" className="flex items-center gap-2 group">
+                        <Link to="/" className="flex items-center gap-2 group">
                             <div className="w-10 h-10 bg-black dark:bg-white rounded-xl flex items-center justify-center transform group-hover:rotate-6 transition-transform">
                                 <span className="text-white dark:text-black font-bold text-xl">U</span>
                             </div>
@@ -83,15 +58,15 @@ const Navbar = () => {
                     {/* Right Actions */}
                     <div className="flex items-center gap-6">
                         <button
-                            onClick={() => setDarkMode(!darkMode)}
+                            onClick={toggleTheme}
                             className={`p-2 rounded-full transition-colors ${isScrolled ? 'hover:bg-gray-100 dark:hover:bg-slate-800' : 'bg-white/90 shadow-sm hover:bg-white'}`}
                         >
                             {darkMode ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-slate-700" />}
                         </button>
 
-                        <Link to="/service-booking/bookings" className={`hidden sm:flex items-center gap-2 font-medium transition-colors ${isScrolled ? 'text-gray-700 dark:text-slate-300 hover:text-purple-600' : 'text-gray-800 hover:text-purple-600'}`}>
+                        <Link to="/dashboard" className={`hidden sm:flex items-center gap-2 font-medium transition-colors ${isScrolled ? 'text-gray-700 dark:text-slate-300 hover:text-purple-600' : 'text-gray-800 hover:text-purple-600'}`}>
                             <ShoppingBag size={20} />
-                            <span>Bookings</span>
+                            <span>Dashboard</span>
                         </Link>
 
                         <button className={`hidden sm:flex items-center gap-2 font-medium transition-colors ${isScrolled ? 'text-gray-700 dark:text-slate-300 hover:text-purple-600' : 'text-gray-800 hover:text-purple-600'}`}>

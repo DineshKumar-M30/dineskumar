@@ -48,7 +48,7 @@ const ServiceDetail = () => {
         <div className="bg-gray-50 dark:bg-slate-950 min-h-screen pb-24 transition-colors duration-300">
             {/* Sticky Header Mobile */}
             <div className="sticky top-0 bg-white dark:bg-slate-900 z-30 px-4 py-3 flex items-center gap-4 shadow-sm md:hidden border-b border-gray-200 dark:border-slate-800">
-                <Link to={`/service-booking/services/${service.categoryId}`}><ChevronLeft size={24} className="text-gray-700 dark:text-slate-300" /></Link>
+                <Link to={`/services/${service.categoryId}`}><ChevronLeft size={24} className="text-gray-700 dark:text-slate-300" /></Link>
                 <span className="font-semibold text-lg truncate text-gray-900 dark:text-white">{service.name}</span>
             </div>
 
@@ -101,8 +101,8 @@ const ServiceDetail = () => {
                         <button
                             onClick={handleToggleCart}
                             className={`px-8 py-3.5 rounded-xl font-bold text-lg shadow-lg transition-all transform active:scale-95 ${isAdded
-                                    ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border-2 border-green-200 dark:border-green-800'
-                                    : 'bg-purple-600 text-white hover:bg-purple-700 hover:shadow-xl'
+                                ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border-2 border-green-200 dark:border-green-800'
+                                : 'bg-purple-600 text-white hover:bg-purple-700 hover:shadow-xl'
                                 }`}
                         >
                             {isAdded ? '✓ Added to Cart' : 'Add to Cart'}

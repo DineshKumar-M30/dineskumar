@@ -52,7 +52,7 @@ const ServiceListing = () => {
             <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 py-8 px-4 sm:px-6 lg:px-8 shadow-sm">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400 mb-3">
-                        <Link to="/service-booking" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Home</Link>
+                        <Link to="/" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Home</Link>
                         <ChevronRight size={14} />
                         <span className="text-gray-900 dark:text-white font-medium capitalize">{categoryInfo?.name || categoryId}</span>
                     </div>
@@ -125,7 +125,7 @@ const ServiceListing = () => {
                             </div>
                             <p className="text-xl font-semibold text-gray-700 dark:text-slate-300 mb-2">No services found</p>
                             <p className="text-gray-500 dark:text-slate-400 mb-6">Try adjusting your filters or explore other categories</p>
-                            <Link to="/service-booking" className="inline-block px-6 py-3 bg-purple-600 text-white font-semibold rounded-xl hover:bg-purple-700 transition-colors">
+                            <Link to="/" className="inline-block px-6 py-3 bg-purple-600 text-white font-semibold rounded-xl hover:bg-purple-700 transition-colors">
                                 Explore Categories
                             </Link>
                         </div>

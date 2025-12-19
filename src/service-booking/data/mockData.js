@@ -6,7 +6,7 @@ export const categories = [
         name: 'AC Service & Repair',
         icon: 'Snowflake', // Using string for now, will map keys to icons
         color: 'bg-blue-100 text-blue-600',
-        image: 'https://images.unsplash.com/photo-1621905476059-5f2779354375?auto=format&fit=crop&q=80&w=300&h=300'
+        image: '/images/ac_service.png'
     },
     {
         id: 'salon-women',
@@ -52,7 +52,7 @@ export const popularServices = [
         rating: 4.8,
         reviews: '12k',
         price: 599,
-        image: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&h=300&fit=crop&q=80'
+        image: '/images/ac_service.png'
     },
     {
         id: 'massage',
@@ -76,7 +76,7 @@ export const services = [
         originalPrice: 999,
         description: 'Advanced cleaning of indoor & outdoor units with foam jet technology.',
         time: '45 mins',
-        image: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&h=300&fit=crop&q=80',
+        image: '/images/ac_service.png',
         features: ['Foam Jet Technology', 'Gas Check', '30 Days Warranty']
     },
     {
@@ -89,7 +89,7 @@ export const services = [
         originalPrice: 3000,
         description: 'Complete gas refill for split or window AC.',
         time: '60 mins',
-        image: 'https://plus.unsplash.com/premium_photo-1663089688180-444ff0066e5d?auto=format&fit=crop&q=80&w=400&h=300',
+        image: '/images/ac_service.png',
         features: ['Leakage Check', 'Gas Refill', 'Performance Test']
     },
 
