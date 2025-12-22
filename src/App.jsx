@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ServiceBookingApp from './service-booking/ServiceBookingApp';
+import EcommerceApp from './ecommerce/EcommerceApp';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Service Booking Platform - Main Application */}
-        <Route path="/*" element={<ServiceBookingApp />} />
+        {/* E-commerce Platform - Primary Application */}
+        <Route path="/*" element={<EcommerceApp />} />
       </Routes>
     </Router>
   );
