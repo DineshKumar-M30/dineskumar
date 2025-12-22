@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { ShoppingCart, Heart, Sun, Moon, Search, Menu, X, ShoppingBag } from 'lucide-react';
+import { ShoppingCart, Heart, Sun, Moon, Search, Menu, X, ShoppingBag, User } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 
 const Navbar = () => {
@@ -80,6 +80,10 @@ const Navbar = () => {
                                 </span>
                             )}
                         </Link>
+
+                        <Link to="/login" className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <User className="w-5 h-5" />
+                        </Link>
                     </div>
 
                     {/* Mobile Menu Toggle */}
@@ -120,6 +124,14 @@ const Navbar = () => {
                             >
                                 <ShoppingCart className="w-5 h-5" />
                                 <span>Cart ({cartCount})</span>
+                            </Link>
+                            <Link
+                                to="/login"
+                                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <User className="w-5 h-5" />
+                                <span>Login / Register</span>
                             </Link>
                             <button
                                 onClick={() => {
